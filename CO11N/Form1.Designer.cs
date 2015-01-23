@@ -101,7 +101,7 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 194F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
@@ -200,10 +200,10 @@
             // txtAufnr
             // 
             this.txtAufnr.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.txtAufnr.Font = new System.Drawing.Font("新細明體", 10F);
+            this.txtAufnr.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtAufnr.Location = new System.Drawing.Point(197, 3);
             this.txtAufnr.Name = "txtAufnr";
-            this.txtAufnr.Size = new System.Drawing.Size(98, 23);
+            this.txtAufnr.Size = new System.Drawing.Size(98, 27);
             this.txtAufnr.TabIndex = 1;
             this.txtAufnr.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtAufnr_KeyDown);
             this.txtAufnr.Leave += new System.EventHandler(this.txtAufnr_Leave);
@@ -220,10 +220,10 @@
             // 
             // txtActivity2
             // 
-            this.txtActivity2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActivity2.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActivity2.Location = new System.Drawing.Point(197, 251);
             this.txtActivity2.Name = "txtActivity2";
-            this.txtActivity2.Size = new System.Drawing.Size(66, 23);
+            this.txtActivity2.Size = new System.Drawing.Size(66, 27);
             this.txtActivity2.TabIndex = 10;
             this.txtActivity2.Text = "0";
             this.txtActivity2.TextChanged += new System.EventHandler(this.txtActivity2_TextChanged);
@@ -240,30 +240,30 @@
             // 
             // txtActivity1
             // 
-            this.txtActivity1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActivity1.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActivity1.Location = new System.Drawing.Point(197, 214);
             this.txtActivity1.Name = "txtActivity1";
-            this.txtActivity1.Size = new System.Drawing.Size(66, 23);
+            this.txtActivity1.Size = new System.Drawing.Size(66, 27);
             this.txtActivity1.TabIndex = 9;
             this.txtActivity1.Text = "0";
             // 
             // txtActiunit2
             // 
             this.txtActiunit2.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActiunit2.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActiunit2.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActiunit2.Location = new System.Drawing.Point(355, 251);
             this.txtActiunit2.Name = "txtActiunit2";
-            this.txtActiunit2.Size = new System.Drawing.Size(40, 23);
+            this.txtActiunit2.Size = new System.Drawing.Size(40, 27);
             this.txtActiunit2.TabIndex = 99;
             this.txtActiunit2.Text = "MIN";
             // 
             // txtActiunit1
             // 
             this.txtActiunit1.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActiunit1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActiunit1.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActiunit1.Location = new System.Drawing.Point(355, 214);
             this.txtActiunit1.Name = "txtActiunit1";
-            this.txtActiunit1.Size = new System.Drawing.Size(40, 23);
+            this.txtActiunit1.Size = new System.Drawing.Size(40, 27);
             this.txtActiunit1.TabIndex = 99;
             this.txtActiunit1.Text = "MIN";
             // 
@@ -279,10 +279,10 @@
             // 
             // txtActivity3
             // 
-            this.txtActivity3.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActivity3.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActivity3.Location = new System.Drawing.Point(197, 287);
             this.txtActivity3.Name = "txtActivity3";
-            this.txtActivity3.Size = new System.Drawing.Size(66, 23);
+            this.txtActivity3.Size = new System.Drawing.Size(66, 27);
             this.txtActivity3.TabIndex = 11;
             this.txtActivity3.Text = "0";
             this.txtActivity3.TextChanged += new System.EventHandler(this.txtActivity3_TextChanged);
@@ -290,10 +290,10 @@
             // txtActiunit3
             // 
             this.txtActiunit3.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActiunit3.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActiunit3.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActiunit3.Location = new System.Drawing.Point(355, 287);
             this.txtActiunit3.Name = "txtActiunit3";
-            this.txtActiunit3.Size = new System.Drawing.Size(40, 23);
+            this.txtActiunit3.Size = new System.Drawing.Size(40, 27);
             this.txtActiunit3.TabIndex = 99;
             this.txtActiunit3.Text = "MIN";
             // 
@@ -309,10 +309,10 @@
             // 
             // txtOperation
             // 
-            this.txtOperation.Font = new System.Drawing.Font("新細明體", 10F);
+            this.txtOperation.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtOperation.Location = new System.Drawing.Point(197, 39);
             this.txtOperation.Name = "txtOperation";
-            this.txtOperation.Size = new System.Drawing.Size(45, 23);
+            this.txtOperation.Size = new System.Drawing.Size(45, 27);
             this.txtOperation.TabIndex = 2;
             // 
             // label11
@@ -328,20 +328,20 @@
             // txtActivity4
             // 
             this.txtActivity4.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActivity4.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActivity4.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActivity4.Location = new System.Drawing.Point(569, 214);
             this.txtActivity4.Name = "txtActivity4";
-            this.txtActivity4.Size = new System.Drawing.Size(66, 23);
+            this.txtActivity4.Size = new System.Drawing.Size(66, 27);
             this.txtActivity4.TabIndex = 99;
             this.txtActivity4.Text = "0";
             // 
             // txtActiunit4
             // 
             this.txtActiunit4.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActiunit4.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActiunit4.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActiunit4.Location = new System.Drawing.Point(671, 214);
             this.txtActiunit4.Name = "txtActiunit4";
-            this.txtActiunit4.Size = new System.Drawing.Size(38, 23);
+            this.txtActiunit4.Size = new System.Drawing.Size(38, 27);
             this.txtActiunit4.TabIndex = 99;
             this.txtActiunit4.Text = "MIN";
             // 
@@ -358,20 +358,20 @@
             // txtActivity5
             // 
             this.txtActivity5.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActivity5.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActivity5.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActivity5.Location = new System.Drawing.Point(569, 251);
             this.txtActivity5.Name = "txtActivity5";
-            this.txtActivity5.Size = new System.Drawing.Size(66, 23);
+            this.txtActivity5.Size = new System.Drawing.Size(66, 27);
             this.txtActivity5.TabIndex = 99;
             this.txtActivity5.Text = "0";
             // 
             // txtActiunit5
             // 
             this.txtActiunit5.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActiunit5.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActiunit5.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActiunit5.Location = new System.Drawing.Point(671, 251);
             this.txtActiunit5.Name = "txtActiunit5";
-            this.txtActiunit5.Size = new System.Drawing.Size(38, 23);
+            this.txtActiunit5.Size = new System.Drawing.Size(38, 27);
             this.txtActiunit5.TabIndex = 99;
             this.txtActiunit5.Text = "MIN";
             // 
@@ -388,20 +388,20 @@
             // txtActivity6
             // 
             this.txtActivity6.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActivity6.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActivity6.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActivity6.Location = new System.Drawing.Point(569, 287);
             this.txtActivity6.Name = "txtActivity6";
-            this.txtActivity6.Size = new System.Drawing.Size(66, 23);
+            this.txtActivity6.Size = new System.Drawing.Size(66, 27);
             this.txtActivity6.TabIndex = 99;
             this.txtActivity6.Text = "0";
             // 
             // txtActiunit6
             // 
             this.txtActiunit6.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtActiunit6.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtActiunit6.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtActiunit6.Location = new System.Drawing.Point(671, 287);
             this.txtActiunit6.Name = "txtActiunit6";
-            this.txtActiunit6.Size = new System.Drawing.Size(38, 23);
+            this.txtActiunit6.Size = new System.Drawing.Size(38, 27);
             this.txtActiunit6.TabIndex = 99;
             this.txtActiunit6.Text = "MIN";
             // 
@@ -417,7 +417,7 @@
             // 
             // txtConf_Text
             // 
-            this.txtConf_Text.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtConf_Text.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtConf_Text.Location = new System.Drawing.Point(197, 456);
             this.txtConf_Text.Multiline = true;
             this.txtConf_Text.Name = "txtConf_Text";
@@ -427,19 +427,19 @@
             // txtBreak_Unit
             // 
             this.txtBreak_Unit.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtBreak_Unit.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtBreak_Unit.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtBreak_Unit.Location = new System.Drawing.Point(355, 381);
             this.txtBreak_Unit.Name = "txtBreak_Unit";
-            this.txtBreak_Unit.Size = new System.Drawing.Size(40, 23);
+            this.txtBreak_Unit.Size = new System.Drawing.Size(40, 27);
             this.txtBreak_Unit.TabIndex = 92;
             this.txtBreak_Unit.Text = "MIN";
             // 
             // txtBreak_Time
             // 
-            this.txtBreak_Time.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtBreak_Time.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtBreak_Time.Location = new System.Drawing.Point(197, 381);
             this.txtBreak_Time.Name = "txtBreak_Time";
-            this.txtBreak_Time.Size = new System.Drawing.Size(66, 23);
+            this.txtBreak_Time.Size = new System.Drawing.Size(66, 27);
             this.txtBreak_Time.TabIndex = 31;
             this.txtBreak_Time.Text = "0";
             // 
@@ -465,10 +465,10 @@
             // 
             // txtYield
             // 
-            this.txtYield.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtYield.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtYield.Location = new System.Drawing.Point(461, 39);
             this.txtYield.Name = "txtYield";
-            this.txtYield.Size = new System.Drawing.Size(45, 23);
+            this.txtYield.Size = new System.Drawing.Size(45, 27);
             this.txtYield.TabIndex = 3;
             this.txtYield.Text = "0";
             // 
@@ -476,8 +476,9 @@
             // 
             this.btnPO.Location = new System.Drawing.Point(569, 39);
             this.btnPO.Name = "btnPO";
-            this.btnPO.Size = new System.Drawing.Size(62, 22);
+            this.btnPO.Size = new System.Drawing.Size(87, 27);
             this.btnPO.TabIndex = 99;
+            this.btnPO.TabStop = false;
             this.btnPO.Text = "讀取工單";
             this.btnPO.UseVisualStyleBackColor = true;
             this.btnPO.Visible = false;
@@ -495,11 +496,11 @@
             // 
             // dtpPostgdate
             // 
-            this.dtpPostgdate.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.dtpPostgdate.Font = new System.Drawing.Font("新細明體", 12F);
             this.dtpPostgdate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpPostgdate.Location = new System.Drawing.Point(197, 419);
             this.dtpPostgdate.Name = "dtpPostgdate";
-            this.dtpPostgdate.Size = new System.Drawing.Size(100, 23);
+            this.dtpPostgdate.Size = new System.Drawing.Size(100, 27);
             this.dtpPostgdate.TabIndex = 32;
             // 
             // buttime
@@ -508,7 +509,8 @@
             this.buttime.Name = "buttime";
             this.buttime.Size = new System.Drawing.Size(115, 33);
             this.buttime.TabIndex = 99;
-            this.buttime.Text = "重新計算人工時間";
+            this.buttime.TabStop = false;
+            this.buttime.Text = "計算時間";
             this.buttime.UseVisualStyleBackColor = true;
             this.buttime.Visible = false;
             this.buttime.Click += new System.EventHandler(this.buttime_Click_1);
@@ -525,22 +527,22 @@
             // 
             // txtStrat_Date
             // 
-            this.txtStrat_Date.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtStrat_Date.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtStrat_Date.Location = new System.Drawing.Point(197, 89);
             this.txtStrat_Date.MaxLength = 8;
             this.txtStrat_Date.Name = "txtStrat_Date";
-            this.txtStrat_Date.Size = new System.Drawing.Size(100, 23);
+            this.txtStrat_Date.Size = new System.Drawing.Size(100, 27);
             this.txtStrat_Date.TabIndex = 4;
             this.txtStrat_Date.TextChanged += new System.EventHandler(this.txtStrat_Date_TextChanged);
             this.txtStrat_Date.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtStart_Date_KeyPress);
             // 
             // txtStart_Time
             // 
-            this.txtStart_Time.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtStart_Time.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtStart_Time.Location = new System.Drawing.Point(355, 89);
             this.txtStart_Time.MaxLength = 4;
             this.txtStart_Time.Name = "txtStart_Time";
-            this.txtStart_Time.Size = new System.Drawing.Size(100, 23);
+            this.txtStart_Time.Size = new System.Drawing.Size(100, 27);
             this.txtStart_Time.TabIndex = 5;
             this.txtStart_Time.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtStart_Time_KeyPress);
             // 
@@ -557,16 +559,16 @@
             // txtFin_Time
             // 
             this.txtFin_Time.BackColor = System.Drawing.SystemColors.Window;
-            this.txtFin_Time.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtFin_Time.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtFin_Time.Location = new System.Drawing.Point(355, 132);
             this.txtFin_Time.MaxLength = 4;
             this.txtFin_Time.Name = "txtFin_Time";
-            this.txtFin_Time.Size = new System.Drawing.Size(100, 23);
+            this.txtFin_Time.Size = new System.Drawing.Size(100, 27);
             this.txtFin_Time.TabIndex = 7;
             // 
             // txtFin_Date
             // 
-            this.txtFin_Date.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtFin_Date.Font = new System.Drawing.Font("新細明體", 10F);
             this.txtFin_Date.Location = new System.Drawing.Point(197, 132);
             this.txtFin_Date.MaxLength = 8;
             this.txtFin_Date.Name = "txtFin_Date";
@@ -608,20 +610,20 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.comboBox1.Font = new System.Drawing.Font("新細明體", 12F);
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.ItemHeight = 13;
+            this.comboBox1.ItemHeight = 16;
             this.comboBox1.Location = new System.Drawing.Point(569, 456);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(87, 21);
+            this.comboBox1.Size = new System.Drawing.Size(87, 24);
             this.comboBox1.TabIndex = 23;
             // 
             // txtRework
             // 
-            this.txtRework.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtRework.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtRework.Location = new System.Drawing.Point(569, 419);
             this.txtRework.Name = "txtRework";
-            this.txtRework.Size = new System.Drawing.Size(45, 23);
+            this.txtRework.Size = new System.Drawing.Size(45, 27);
             this.txtRework.TabIndex = 22;
             this.txtRework.Text = "0";
             // 
@@ -647,20 +649,20 @@
             // 
             // txtScrap
             // 
-            this.txtScrap.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtScrap.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtScrap.Location = new System.Drawing.Point(569, 381);
             this.txtScrap.Name = "txtScrap";
-            this.txtScrap.Size = new System.Drawing.Size(45, 23);
+            this.txtScrap.Size = new System.Drawing.Size(45, 27);
             this.txtScrap.TabIndex = 21;
             this.txtScrap.Text = "0";
             // 
             // txtQuanunit
             // 
             this.txtQuanunit.BackColor = System.Drawing.SystemColors.ScrollBar;
-            this.txtQuanunit.Font = new System.Drawing.Font("新細明體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.txtQuanunit.Font = new System.Drawing.Font("新細明體", 12F);
             this.txtQuanunit.Location = new System.Drawing.Point(671, 381);
             this.txtQuanunit.Name = "txtQuanunit";
-            this.txtQuanunit.Size = new System.Drawing.Size(40, 23);
+            this.txtQuanunit.Size = new System.Drawing.Size(40, 27);
             this.txtQuanunit.TabIndex = 99;
             this.txtQuanunit.Text = "PC";
             // 
@@ -729,14 +731,15 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
-            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ControlLight;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ActiveBorder;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(380, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(362, 150);
-            this.dataGridView1.TabIndex = 8;
+            this.dataGridView1.TabIndex = 99;
+            this.dataGridView1.TabStop = false;
             // 
             // Form1
             // 
