@@ -25,15 +25,15 @@ namespace CO11N
             string[] ALL = sapReportPrms.SQL();
 
             // 連線字串
-            D_connIP = "192.168.0.15";
+            D_connIP = "192.168.0.16";
             D_connUser = "DDIC";
             D_connPwd = "Ubn3dx";
             // D_rptNm = ALL[3];
             D_status = ALL[4];
-            D_connClient = "620";
+            D_connClient = "800";
             D_connLanguage = "ZF";
             D_connRFC = "ZPPRFC006";
-            D_connSID = "DEV";
+            D_connSID = "PRD";
 
             if (D_status == "False")
             {
@@ -107,7 +107,7 @@ namespace CO11N
          
 
             RfcConfigParameters rfcPar = new RfcConfigParameters();
-            rfcPar.Add(RfcConfigParameters.Name, "PRD");
+            rfcPar.Add(RfcConfigParameters.Name, D_connSID);
             rfcPar.Add(RfcConfigParameters.AppServerHost,D_connIP);
             rfcPar.Add(RfcConfigParameters.Client,  D_connClient);
             rfcPar.Add(RfcConfigParameters.User,D_connUser);
