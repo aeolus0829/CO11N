@@ -16,7 +16,7 @@ namespace CO11N
 {
     public partial class Form1 : Form
     {
-        string D_connIP, D_connUser, D_connPwd, D_rptNm, D_status, D_connClient, D_connLanguage;
+        string D_connIP, D_connUser, D_connPwd, D_rptNm, D_status, D_connClient, D_connLanguage, D_connRFC, D_connNum, D_connSID;
       
       
         public Form1()
@@ -24,13 +24,16 @@ namespace CO11N
             sapReportPrms sapReportPrms = new sapReportPrms();
             string[] ALL = sapReportPrms.SQL();
 
-            D_connIP = ALL[0];
-            D_connUser = ALL[1];
-            D_connPwd = ALL[2];
-            D_rptNm = ALL[3];
+            // 連線字串
+            D_connIP = "192.168.0.16";
+            D_connUser = "DDIC";
+            D_connPwd = "Ubn3dx";
+            // D_rptNm = ALL[3];
             D_status = ALL[4];
-            D_connClient = ALL[5];
-            D_connLanguage = ALL[6];
+            D_connClient = "800";
+            D_connLanguage = "ZF";
+            D_connRFC = "ZPPRFC006";
+            D_connSID = "PRD";
 
             if (D_status == "False")
             {
@@ -221,19 +224,19 @@ namespace CO11N
         private void btnPO_Click(object sender, EventArgs e)
         {
             RfcConfigParameters rfcPar = new RfcConfigParameters();
-            rfcPar.Add(RfcConfigParameters.Name, "PRD");
+            rfcPar.Add(RfcConfigParameters.Name, D_connSID);
             rfcPar.Add(RfcConfigParameters.AppServerHost, D_connIP);
             rfcPar.Add(RfcConfigParameters.Client,  D_connClient);
             rfcPar.Add(RfcConfigParameters.User, D_connUser);
             rfcPar.Add(RfcConfigParameters.Password, D_connPwd);
-            rfcPar.Add(RfcConfigParameters.SystemNumber, "00");
+            rfcPar.Add(RfcConfigParameters.SystemNumber, D_connNum);
             rfcPar.Add(RfcConfigParameters.Language, D_connLanguage);
             RfcDestination dest = RfcDestinationManager.GetDestination(rfcPar);
             RfcRepository rfcrep = dest.Repository;
             IRfcFunction myfun = null;
 
             //函數名稱
-            myfun = rfcrep.CreateFunction("ZPPRFC006");
+            myfun = rfcrep.CreateFunction(D_connRFC);
             //輸入參數：工單號碼
             myfun.SetValue("P_AUFNR", txtAufnr.Text.ToString().Trim());
             // Call function.
