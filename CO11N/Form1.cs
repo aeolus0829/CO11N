@@ -25,15 +25,15 @@ namespace CO11N
             string[] ALL = sapReportPrms.SQL();
 
             // 連線字串
-            D_connIP = "192.168.0.16";
+            D_connIP = "192.168.0.15";
             D_connUser = "DDIC";
             D_connPwd = "Ubn3dx";
             // D_rptNm = ALL[3];
             D_status = ALL[4];
-            D_connClient = "800";
+            D_connClient = "620";
             D_connLanguage = "ZF";
             D_connRFC = "ZPPRFC006";
-            D_connSID = "PRD";
+            D_connSID = "DEV";
 
             if (D_status == "False")
             {
@@ -104,7 +104,7 @@ namespace CO11N
         private void btnSubmin_Click(object sender, EventArgs e)
         {
             string userName = Environment.UserName;//System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            
+         
 
             RfcConfigParameters rfcPar = new RfcConfigParameters();
             rfcPar.Add(RfcConfigParameters.Name, "PRD");
@@ -412,13 +412,59 @@ namespace CO11N
         private void txtStrat_Date_TextChanged(object sender, EventArgs e)
         {
             //txtFin_Date.Text = txtStrat_Date.Text;
-
         }
 
         //時間計算參數
         int start_year, fin_year;
         int start_date1, start_date2;
         int fin_date1, fin_date2;
+
+        private void txtMachine_Calc(object sender, EventArgs e)
+        {
+            // 計算機器加工時間，單位秒數
+            // for 加工組
+            try {
+                double machineTimeInSec, orderQty, machineTimeInMin;
+                orderQty = Convert.ToInt32(txtYield.Text);
+                machineTimeInSec = Convert.ToInt32(txtMachineTime.Text);
+                machineTimeInMin = Math.Round((orderQty*machineTimeInSec)/60,0);
+                txtActivity2.Text = machineTimeInMin.ToString();
+            } catch {
+                MessageBox.Show("只能輸入秒數，格式為整數", "錯誤");
+            }
+        }
+
+        private void txtMachineTime_TextChanged(object sender, EventArgs e)
+        {
+            txtMachineTime.Text = "";
+        }
+
+        private void machineTime_reclac(object sender, EventArgs e)
+        {
+            // 機器工時不是0或空的
+            // 人工工時需扣除機器工時
+
+            if (txtActivity2.Text != "0" || string.IsNullOrEmpty(txtActivity2.Text))
+            {
+                try
+                {
+                    double menTimeInMin, machineTimeInMin, subMachineTimeFromMenTime;
+                    menTimeInMin = Convert.ToInt32(txtActivity3.Text);
+                    machineTimeInMin = Convert.ToInt32(txtActivity2.Text);
+                    subMachineTimeFromMenTime = menTimeInMin - machineTimeInMin;
+                    if (subMachineTimeFromMenTime < 0) {
+                        txtActivity3.Text = "1";
+                    } else { 
+                        txtActivity3.Text = subMachineTimeFromMenTime.ToString();
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("時間不能為負數", "錯誤");
+                }
+            }
+}
+
         int start_time1, start_time2;
         int fin_time1, fin_time2;
         int sec;
@@ -488,8 +534,7 @@ namespace CO11N
                 
                 //投入人工預設為1
                 final = Convert.ToInt16(textBox1.Text) * count;
-                txtActivity3.Text = Convert.ToString(final);
-      
+                txtActivity3.Text = Convert.ToString(final);      
             }
 
         }
