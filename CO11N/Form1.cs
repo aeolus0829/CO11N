@@ -172,7 +172,6 @@ namespace CO11N
             //外部確認者
             rfcFunc.SetValue("EX_CREATED_BY", windowsAccount);
 
-
             // Call function.
             rfcFunc.Invoke(rfcDest);
 
@@ -180,11 +179,9 @@ namespace CO11N
             string returnMessageType = rfcFunc.GetValue("STYPE").ToString();
             string status = rfcFunc.GetValue("STATUS").ToString();
 
-            // Declare message title. 
             string returnMessage = "";
             switch (returnMessageType)
             {
-                //訊息類型︰S 成功，E 錯誤， W 警告﹐I 資訊﹐A 取消
                 case "S": returnMessage = "成功"; break;
                 case "E": returnMessage = "錯誤"; break;
                 case "W": returnMessage = "警告"; break;
@@ -192,7 +189,6 @@ namespace CO11N
                 case "A": returnMessage = "取消"; break;
             }
 
-            //MessageBox.Show(status, title);
             if (MessageBox.Show(status, returnMessage) == DialogResult.OK)
             {
                 btnClear.PerformClick();
@@ -228,7 +224,7 @@ namespace CO11N
 
             IRfcFunction rfcFunc = null;
 
-            //函數名稱
+            // rfc 函數名稱
             rfcFunc = rfcRepo.CreateFunction(D_RFCgetOrderDetail);
             //輸入參數：工單號碼
             rfcFunc.SetValue("P_AUFNR", txtAufnr.Text.ToString().Trim());
@@ -251,11 +247,10 @@ namespace CO11N
                 dt.Rows.Add(dr);
             }
             
-            //GridData資料來源
             dataGridView1.DataSource = dt.DefaultView;
             dataGridView1.ReadOnly = true;
 
-            //回傳參數
+            // rfc 回傳參數
             string KDAUF = rfcFunc.GetValue("KDAUF").ToString().TrimStart('0');
             string KDPOS = rfcFunc.GetValue("KDPOS").ToString().TrimStart('0');
             string PSMNG = rfcFunc.GetValue("PSMNG").ToString().TrimEnd('0').TrimEnd('.');
@@ -400,7 +395,6 @@ namespace CO11N
 
         }
 
-        //時間計算參數
         int start_year, fin_year, start_date1, start_date2, fin_date1, fin_date2;
 
         private void txtMachine_Calc(object sender, EventArgs e)
@@ -460,7 +454,6 @@ namespace CO11N
         int start_time1, start_time2, fin_time1, fin_time2, sec, calcDay,calcHour,calcMinute;
         int convertToMniute, totalManHour;
 
-        //時間計算
         private void btnCalcTime_Click(object sender, EventArgs e)
         {
             try
@@ -505,9 +498,7 @@ namespace CO11N
                     fin_time1 = Convert.ToInt16(txtFin_Time.Text.Substring(0, 2));
                     fin_time2 = Convert.ToInt16(txtFin_Time.Text.Substring(2));
 
-                    //       起始時間              年           月           日            時           分      秒預設為0
                     DateTime startDateTime = new DateTime(start_year, start_date1, start_date2, start_time1, start_time2, sec);
-                    //       結束時間
                     DateTime endDateTime = new DateTime(fin_year, fin_date1, fin_date2, fin_time1, fin_time2, sec);
 
                     TimeSpan timeSpan = endDateTime.Subtract(startDateTime);
@@ -520,7 +511,6 @@ namespace CO11N
 
                     convertToMniute = ((calcDay * 24) + calcHour) * 60 + calcMinute;
 
-                    //投入人工預設為1
                     totalManHour = Convert.ToInt16(txtPerson.Text) * convertToMniute;
                     txtActivity3.Text = Convert.ToString(totalManHour);
                 }
@@ -531,12 +521,11 @@ namespace CO11N
             }
         }
 
-        //按enter 執行計算
         private void  txtFin_Time_KeyDown(object sender, KeyEventArgs e)
         {
 
         }
-        //按enter 執行計算
+
         private void txtFin_Date_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -544,7 +533,7 @@ namespace CO11N
                 btnCalcTime_Click(sender, e);
             }
         }
-        //按enter 執行計算
+
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -568,7 +557,7 @@ namespace CO11N
                 MessageBox.Show("請檢查輸入時間是否正確", "錯誤");
             }
         }
-        //離開 txtBox1 後自動觸發：時間計算
+
         private void textBox1_Leave(object sender, EventArgs e)
         {
             try
