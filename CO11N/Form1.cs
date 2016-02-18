@@ -261,6 +261,7 @@ namespace CO11N
             string PSMNG = rfcFunc.GetValue("PSMNG").ToString().TrimEnd('0').TrimEnd('.');
             string DGLTS = rfcFunc.GetValue("DGLTS").ToString();
             string USER_LINE = rfcFunc.GetValue("USER_LINE").ToString();
+
             lblQty.Text = "工單數量：" + PSMNG;
             lblStatus.Text = "使用者自定狀態：" + USER_LINE;
             lblSoitme.Text = "銷售訂單/項次：" + KDAUF + " / " + KDPOS;
@@ -379,9 +380,9 @@ namespace CO11N
         {
             try
             {
-                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+                Cursor.Current = Cursors.WaitCursor;
                 btnPO_Click(sender, e);
-                System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                Cursor.Current = Cursors.Default;
             }
             catch (Exception)
             {
@@ -400,9 +401,7 @@ namespace CO11N
         }
 
         //時間計算參數
-        int start_year, fin_year;
-        int start_date1, start_date2;
-        int fin_date1, fin_date2;
+        int start_year, fin_year, start_date1, start_date2, fin_date1, fin_date2;
 
         private void txtMachine_Calc(object sender, EventArgs e)
         {
@@ -441,14 +440,14 @@ namespace CO11N
             {
                 try
                 {
-                    double menTimeInMin, machineTimeInMin, subMachineTimeFromMenTime;
+                    double menTimeInMin, machineTimeInMin, calcMachineTime;
                     menTimeInMin = Convert.ToInt32(txtActivity3.Text);
                     machineTimeInMin = Convert.ToInt32(txtActivity2.Text);
-                    subMachineTimeFromMenTime = menTimeInMin - machineTimeInMin;
-                    if (subMachineTimeFromMenTime < 0) {
+                    calcMachineTime = menTimeInMin - machineTimeInMin;
+                    if (calcMachineTime < 0) {
                         txtActivity3.Text = "1";
                     } else { 
-                        txtActivity3.Text = subMachineTimeFromMenTime.ToString();
+                        txtActivity3.Text = calcMachineTime.ToString();
                     }
                 }
                 catch
