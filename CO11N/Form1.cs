@@ -16,7 +16,7 @@ namespace CO11N
 {
     public partial class Form1 : Form
     {
-        string D_connIP, D_connUser, D_connPwd, D_rptNm, D_status, D_connClient, D_connLanguage, D_connRFC, D_connNum, D_connSID;
+        string D_connIP, D_connUser, D_connPwd, D_rptNm, D_status, D_connClient, D_connLanguage, D_RFCgetOrderDetail, D_RFCconfirmCommit,D_connNum, D_connSID;
       
       
         public Form1()
@@ -25,19 +25,19 @@ namespace CO11N
             string[] ALL = sapReportPrms.SQL();
 
             // 連線字串
-            D_connIP = "192.168.0.16";
+            D_connIP = "192.168.0.15";
             D_connUser = "DDIC";
             D_connPwd = "Ubn3dx";
             // D_rptNm = ALL[3];
             D_status = ALL[4];
-            D_connClient = "800";
+            D_connClient = "620";
             D_connLanguage = "ZF";
-            D_connRFC = "ZPPRFC006";
-            D_connSID = "PRD";
+            D_RFCgetOrderDetail = "ZPPRFC006"; //讀取工單資料
+            D_RFCconfirmCommit = "ZPPRFC005"; //送出報工結果
+            D_connSID = "DEV";
 
             if (D_status == "False")
             {
-                //目前程式停用中，請連絡資訊組
                 MessageBox.Show("目前程式停用中，請連絡資訊組");            
             }
             else {
@@ -89,12 +89,6 @@ namespace CO11N
             txtActivity6.ReadOnly = true;
             txtActiunit6.ReadOnly = true;
 
-            /*dateTimePicker1.Format = DateTimePickerFormat.Custom;
-            dateTimePicker1.CustomFormat = "yyyy/MM/dd";
-            dateTimePicker2.Format = DateTimePickerFormat.Time;
-            dateTimePicker2.CustomFormat = "tt hh:mm:ss";
-            dateTimePicker2.ShowUpDown = true;*/
-
             //過帳日期
             dtpPostgdate.Format = DateTimePickerFormat.Custom;
             dtpPostgdate.CustomFormat = "yyyy/MM/dd";
@@ -103,8 +97,7 @@ namespace CO11N
 
         private void btnSubmin_Click(object sender, EventArgs e)
         {
-            string userName = Environment.UserName;//System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-         
+            string windowsAccount = Environment.UserName;      
 
             RfcConfigParameters rfcPar = new RfcConfigParameters();
             rfcPar.Add(RfcConfigParameters.Name, D_connSID);
@@ -116,9 +109,10 @@ namespace CO11N
             rfcPar.Add(RfcConfigParameters.Language,D_connLanguage);
             RfcDestination dest = RfcDestinationManager.GetDestination(rfcPar);
             RfcRepository rfcrep = dest.Repository;
+
             IRfcFunction myfun = null;
             //函數名稱
-            myfun = rfcrep.CreateFunction("ZPPRFC005");
+            myfun = rfcrep.CreateFunction(D_RFCconfirmCommit);
             //設置輸入參數
             //工單號碼
             myfun.SetValue("AUFNR", txtAufnr.Text);
@@ -161,12 +155,12 @@ namespace CO11N
             //過帳日期
             myfun.SetValue("POSTG_DATE", Convert.ToDateTime(dtpPostgdate.Value.Date).ToString("yyyyMMdd"));
             //開時執行日期
-            myfun.SetValue("START_DATE", txtStrat_Date.Text);
+            myfun.SetValue("START_DATE", txtStart_Date.Text);
             //開始執行時間
             if(txtStart_Time.Text != "") 
             myfun.SetValue("START_TIME", txtStart_Time.Text + "00");
             //完成執行日期
-            myfun.SetValue("FIN_DATE", txtFin_Date.Text);
+            myfun.SetValue("FIN_DATE", txtEnd_Date.Text);
             //完成執行時間
             if (txtFin_Time.Text != "")
             myfun.SetValue("FIN_TIME", txtFin_Time.Text + "00");
@@ -177,7 +171,7 @@ namespace CO11N
             //確認內文
             myfun.SetValue("CONF_TEXT", txtConf_Text.Text);
             //外部確認者
-            myfun.SetValue("EX_CREATED_BY", userName);
+            myfun.SetValue("EX_CREATED_BY", windowsAccount);
 
 
             // Call function.
@@ -204,7 +198,6 @@ namespace CO11N
             {
                 btnClear.PerformClick();
             }
-
         }
 
 
@@ -233,16 +226,16 @@ namespace CO11N
             rfcPar.Add(RfcConfigParameters.Language, D_connLanguage);
             RfcDestination dest = RfcDestinationManager.GetDestination(rfcPar);
             RfcRepository rfcrep = dest.Repository;
-            IRfcFunction myfun = null;
+            IRfcFunction rfcFunc = null;
 
             //函數名稱
-            myfun = rfcrep.CreateFunction(D_connRFC);
+            rfcFunc = rfcrep.CreateFunction(D_RFCgetOrderDetail);
             //輸入參數：工單號碼
-            myfun.SetValue("P_AUFNR", txtAufnr.Text.ToString().Trim());
+            rfcFunc.SetValue("P_AUFNR", txtAufnr.Text.ToString().Trim());
             // Call function.
-            myfun.Invoke(dest);
+            rfcFunc.Invoke(dest);
             //回傳內表
-            IRfcTable ITAB = myfun.GetTable("ITAB");
+            IRfcTable ITAB = rfcFunc.GetTable("ITAB");
             DataTable dt = new DataTable();
             dt.Columns.Add("作業號碼");
             dt.Columns.Add("作業短文");
@@ -263,11 +256,11 @@ namespace CO11N
             dataGridView1.ReadOnly = true;
 
             //回傳參數
-            string KDAUF = myfun.GetValue("KDAUF").ToString().TrimStart('0');
-            string KDPOS = myfun.GetValue("KDPOS").ToString().TrimStart('0');
-            string PSMNG = myfun.GetValue("PSMNG").ToString().TrimEnd('0').TrimEnd('.');
-            string DGLTS = myfun.GetValue("DGLTS").ToString();
-            string USER_LINE = myfun.GetValue("USER_LINE").ToString();
+            string KDAUF = rfcFunc.GetValue("KDAUF").ToString().TrimStart('0');
+            string KDPOS = rfcFunc.GetValue("KDPOS").ToString().TrimStart('0');
+            string PSMNG = rfcFunc.GetValue("PSMNG").ToString().TrimEnd('0').TrimEnd('.');
+            string DGLTS = rfcFunc.GetValue("DGLTS").ToString();
+            string USER_LINE = rfcFunc.GetValue("USER_LINE").ToString();
             //lblQty
             lblQty.Visible = true;
             lblQty.Text = "工單數量：" + PSMNG;
@@ -287,9 +280,7 @@ namespace CO11N
             //作業6 = 機器
             txtActivity6.Text = txtActivity2.Text;
             txtActiunit6.Text = txtActiunit2.Text;
-        }
-
-      
+        }      
            
         private void txtActivity3_TextChanged(object sender, EventArgs e)
         {
@@ -299,9 +290,7 @@ namespace CO11N
             //作業5 = 人工
             txtActivity5.Text = txtActivity3.Text;
             txtActiunit4.Text = txtActiunit3.Text;
-        }
-
-      
+        }      
 
         private void txtStart_Date_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -442,7 +431,7 @@ namespace CO11N
         private void machineTime_reclac(object sender, EventArgs e)
         {
             // 機器工時不是0或空的
-            // 人工工時需扣除機器工時
+            // 人工工時就要扣除機器工時
 
             if (txtActivity2.Text != "0" || string.IsNullOrEmpty(txtActivity2.Text))
             {
@@ -473,40 +462,37 @@ namespace CO11N
         int final;
 
         //時間計算
-        private void buttime_Click(object sender, EventArgs e)
+        private void btnCalcTime_Click(object sender, EventArgs e)
         {   
-            if(txtStrat_Date.Text.Length==0|txtFin_Date.Text.Length==0)
+            if(txtStart_Date.Text.Length==0|txtEnd_Date.Text.Length==0)
             { 
-              txtStrat_Date.Text=DateTime.Now.ToString("yyyyMMdd");
-          
-              txtFin_Date.Text=DateTime.Now.ToString("yyyyMMdd");   
+              txtStart_Date.Text=DateTime.Now.ToString("yyyyMMdd");          
+              txtEnd_Date.Text=DateTime.Now.ToString("yyyyMMdd");   
             }
-           if (txtStrat_Date.Text.Length == 4 | txtFin_Date.Text.Length == 4)
+           if (txtStart_Date.Text.Length == 4 | txtEnd_Date.Text.Length == 4)
            {   
-               txtStrat_Date.Text = DateTime.Now.ToString("yyyy") + txtStrat_Date.Text;
-
-               txtFin_Date.Text = DateTime.Now.ToString("yyyy") + txtFin_Date.Text;
+               txtStart_Date.Text = DateTime.Now.ToString("yyyy") + txtStart_Date.Text;
+               txtEnd_Date.Text = DateTime.Now.ToString("yyyy") + txtEnd_Date.Text;
            }
-           if (txtStrat_Date.Text.Length == 3 | txtFin_Date.Text.Length == 3)
+           if (txtStart_Date.Text.Length == 3 | txtEnd_Date.Text.Length == 3)
            {
-               txtStrat_Date.Text = DateTime.Now.ToString("yyyy") + "0" + txtStrat_Date.Text;
-
-               txtFin_Date.Text = DateTime.Now.ToString("yyyy") + "0" + txtFin_Date.Text;
+               txtStart_Date.Text = DateTime.Now.ToString("yyyy") + "0" + txtStart_Date.Text;
+               txtEnd_Date.Text = DateTime.Now.ToString("yyyy") + "0" + txtEnd_Date.Text;
            }
-            if (txtStrat_Date.Text.Length != 8 | txtFin_Date.Text.Length != 8 |
+            if (txtStart_Date.Text.Length != 8 | txtEnd_Date.Text.Length != 8 |
                 txtStart_Time.Text.Length != 4 | txtFin_Time.Text.Length != 4 )
             {
                 MessageBox.Show("日期或時間請輸入完整格式！ 例: 日期20150105 ; 時間0800","錯誤");
             }
             else {
                
-                start_year = Convert.ToUInt16(txtStrat_Date.Text.Substring(0, 4));
-                start_date1 = Convert.ToInt16(txtStrat_Date.Text.Substring(4, 2));
-                start_date2 = Convert.ToInt16(txtStrat_Date.Text.Substring(6 ,2));
+                start_year = Convert.ToUInt16(txtStart_Date.Text.Substring(0, 4));
+                start_date1 = Convert.ToInt16(txtStart_Date.Text.Substring(4, 2));
+                start_date2 = Convert.ToInt16(txtStart_Date.Text.Substring(6 ,2));
 
-                fin_year = Convert.ToInt16(txtFin_Date.Text.Substring(0, 4));
-                fin_date1 = Convert.ToInt16(txtFin_Date.Text.Substring(4, 2));
-                fin_date2 = Convert.ToInt16(txtFin_Date.Text.Substring(6, 2));
+                fin_year = Convert.ToInt16(txtEnd_Date.Text.Substring(0, 4));
+                fin_date1 = Convert.ToInt16(txtEnd_Date.Text.Substring(4, 2));
+                fin_date2 = Convert.ToInt16(txtEnd_Date.Text.Substring(6, 2));
 
                 start_time1 = Convert.ToInt16(txtStart_Time.Text.Substring(0, 2));
                 start_time2 = Convert.ToInt16(txtStart_Time.Text.Substring(2));
@@ -548,7 +534,7 @@ namespace CO11N
         {
             if (e.KeyCode == Keys.Enter)
             {
-                buttime_Click(sender, e);
+                btnCalcTime_Click(sender, e);
             }
         }
         //按enter 執行計算
@@ -556,7 +542,7 @@ namespace CO11N
         {
             if (e.KeyCode == Keys.Enter)
             {
-                buttime_Click(sender, e);
+                btnCalcTime_Click(sender, e);
             }
         }
 
@@ -567,7 +553,7 @@ namespace CO11N
             try
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
-                buttime_Click(sender, e);
+                btnCalcTime_Click(sender, e);
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             }
             catch (Exception)
@@ -581,7 +567,7 @@ namespace CO11N
             try
             {
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
-                buttime_Click(sender, e);
+                btnCalcTime_Click(sender, e);
                 System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
             }
             catch (Exception)
