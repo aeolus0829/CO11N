@@ -216,24 +216,25 @@ namespace CO11N
 
         private void btnPO_Click(object sender, EventArgs e)
         {
-            RfcConfigParameters rfcPar = new RfcConfigParameters();
-            rfcPar.Add(RfcConfigParameters.Name, D_connSID);
-            rfcPar.Add(RfcConfigParameters.AppServerHost, D_connIP);
-            rfcPar.Add(RfcConfigParameters.Client,  D_connClient);
-            rfcPar.Add(RfcConfigParameters.User, D_connUser);
-            rfcPar.Add(RfcConfigParameters.Password, D_connPwd);
-            rfcPar.Add(RfcConfigParameters.SystemNumber, D_connNum);
-            rfcPar.Add(RfcConfigParameters.Language, D_connLanguage);
-            RfcDestination dest = RfcDestinationManager.GetDestination(rfcPar);
-            RfcRepository rfcrep = dest.Repository;
+            RfcConfigParameters rfcPara = new RfcConfigParameters();
+            rfcPara.Add(RfcConfigParameters.Name, D_connSID);
+            rfcPara.Add(RfcConfigParameters.AppServerHost, D_connIP);
+            rfcPara.Add(RfcConfigParameters.Client,  D_connClient);
+            rfcPara.Add(RfcConfigParameters.User, D_connUser);
+            rfcPara.Add(RfcConfigParameters.Password, D_connPwd);
+            rfcPara.Add(RfcConfigParameters.SystemNumber, D_connNum);
+            rfcPara.Add(RfcConfigParameters.Language, D_connLanguage);
+            RfcDestination rfcDest = RfcDestinationManager.GetDestination(rfcPara);
+            RfcRepository rfcRepo = rfcDest.Repository;
+
             IRfcFunction rfcFunc = null;
 
             //函數名稱
-            rfcFunc = rfcrep.CreateFunction(D_RFCgetOrderDetail);
+            rfcFunc = rfcRepo.CreateFunction(D_RFCgetOrderDetail);
             //輸入參數：工單號碼
             rfcFunc.SetValue("P_AUFNR", txtAufnr.Text.ToString().Trim());
             // Call function.
-            rfcFunc.Invoke(dest);
+            rfcFunc.Invoke(rfcDest);
             //回傳內表
             IRfcTable ITAB = rfcFunc.GetTable("ITAB");
             DataTable dt = new DataTable();
@@ -404,7 +405,7 @@ namespace CO11N
 
         private void txtStrat_Date_TextChanged(object sender, EventArgs e)
         {
-            //txtFin_Date.Text = txtStrat_Date.Text;
+
         }
 
         //時間計算參數
@@ -466,12 +467,8 @@ namespace CO11N
             }
 }
 
-        int start_time1, start_time2;
-        int fin_time1, fin_time2;
-        int sec;
-        int calcDay,calcHour,calcMinute;
-        int convertToMniute;
-        int totalManHour;
+        int start_time1, start_time2, fin_time1, fin_time2, sec, calcDay,calcHour,calcMinute;
+        int convertToMniute, totalManHour;
 
         //時間計算
         private void btnCalcTime_Click(object sender, EventArgs e)
