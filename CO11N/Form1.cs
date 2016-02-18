@@ -16,7 +16,7 @@ namespace CO11N
 {
     public partial class Form1 : Form
     {
-        string D_connIP, D_connUser, D_connPwd, D_rptNm, D_status, D_connClient, D_connLanguage, D_RFCgetOrderDetail, D_RFCconfirmCommit,D_connNum, D_connSID;
+        string D_connIP, D_connUser, D_connPwd, D_status, D_connClient, D_connLanguage, D_RFCgetOrderDetail, D_RFCconfirmCommit,D_connNum, D_connSID;
         bool keyIsAccept;
 
 
@@ -29,7 +29,6 @@ namespace CO11N
             D_connIP = "192.168.0.15";
             D_connUser = "DDIC";
             D_connPwd = "Ubn3dx";
-            // D_rptNm = ALL[3];
             D_status = ALL[4];
             D_connClient = "620";
             D_connLanguage = "ZF";
@@ -262,17 +261,9 @@ namespace CO11N
             string PSMNG = rfcFunc.GetValue("PSMNG").ToString().TrimEnd('0').TrimEnd('.');
             string DGLTS = rfcFunc.GetValue("DGLTS").ToString();
             string USER_LINE = rfcFunc.GetValue("USER_LINE").ToString();
-            //lblQty
-            lblQty.Visible = true;
             lblQty.Text = "工單數量：" + PSMNG;
-            //lblStatus
-            lblStatus.Visible = true;
             lblStatus.Text = "使用者自定狀態：" + USER_LINE;
-            //lblSoitem
-            lblSoitme.Visible = true;
             lblSoitme.Text = "銷售訂單/項次：" + KDAUF + " / " + KDPOS;
-            //lblEndate
-            lblEnddate.Visible = true;
             lblEnddate.Text = "工單排程結束日期：" + DGLTS;
         }
 
