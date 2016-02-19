@@ -160,8 +160,8 @@ namespace CO11N
             //完成執行日期
             rfcFunc.SetValue("FIN_DATE", txtEnd_Date.Text);
             //完成執行時間
-            if (txtFin_Time.Text != "")
-            rfcFunc.SetValue("FIN_TIME", txtFin_Time.Text + "00");
+            if (txtEnd_Time.Text != "")
+            rfcFunc.SetValue("FIN_TIME", txtEnd_Time.Text + "00");
             //休息時間
             rfcFunc.SetValue("BREAK_TIME", txtBreak_Time.Text);
             //休息時間單位
@@ -384,7 +384,7 @@ namespace CO11N
             }
         }
 
-        int start_year, fin_year, start_date1, start_date2, fin_date1, fin_date2;
+        int start_year, end_year, start_mon, start_day, end_mon, end_day;
 
         private void txtStart_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -408,6 +408,8 @@ namespace CO11N
             try {
                 double machineTimeInSec, orderQty, machineTimeInMin;
                 orderQty = Convert.ToInt32(txtYield.Text);
+
+                if (orderQty == 0) orderQty = 1; // 有只報工時、沒報數量的狀況；時間仍要照常計算，因此數量不能為0
 
                 if (!string.IsNullOrEmpty(txtMachineTime.Text))
                 {
@@ -457,7 +459,7 @@ namespace CO11N
             }
 }
 
-        int start_time1, start_time2, fin_time1, fin_time2, sec, calcDay,calcHour,calcMinute;
+        int start_hour, start_min, end_hour, end_min, sec, calcDay,calcHour,calcMinute;
         int convertToMniute, totalPersonHour;
 
         private void btnCalcTime_Click(object sender, EventArgs e)
@@ -485,27 +487,31 @@ namespace CO11N
 
                 //日期或時間格式不對
                 if (txtStart_Date.Text.Length != 8 | txtEnd_Date.Text.Length != 8 |
-                    txtStart_Time.Text.Length != 4 | txtFin_Time.Text.Length != 4)
+                    txtStart_Time.Text.Length != 4 | txtEnd_Time.Text.Length != 4)
                 {
                     MessageBox.Show("日期或時間請輸入完整格式！ 例: 日期 20150105 ; 時間 0800", "錯誤");
                 }
                 else {
+                    int totalBreakTime = 0;
+
                     start_year = Convert.ToUInt16(txtStart_Date.Text.Substring(0, 4));
-                    start_date1 = Convert.ToInt16(txtStart_Date.Text.Substring(4, 2));
-                    start_date2 = Convert.ToInt16(txtStart_Date.Text.Substring(6, 2));
+                    start_mon = Convert.ToInt16(txtStart_Date.Text.Substring(4, 2));
+                    start_day = Convert.ToInt16(txtStart_Date.Text.Substring(6, 2));
 
-                    fin_year = Convert.ToInt16(txtEnd_Date.Text.Substring(0, 4));
-                    fin_date1 = Convert.ToInt16(txtEnd_Date.Text.Substring(4, 2));
-                    fin_date2 = Convert.ToInt16(txtEnd_Date.Text.Substring(6, 2));
+                    end_year = Convert.ToInt16(txtEnd_Date.Text.Substring(0, 4));
+                    end_mon = Convert.ToInt16(txtEnd_Date.Text.Substring(4, 2));
+                    end_day = Convert.ToInt16(txtEnd_Date.Text.Substring(6, 2));
 
-                    start_time1 = Convert.ToInt16(txtStart_Time.Text.Substring(0, 2));
-                    start_time2 = Convert.ToInt16(txtStart_Time.Text.Substring(2));
+                    start_hour = Convert.ToInt16(txtStart_Time.Text.Substring(0, 2));
+                    start_min = Convert.ToInt16(txtStart_Time.Text.Substring(2));
 
-                    fin_time1 = Convert.ToInt16(txtFin_Time.Text.Substring(0, 2));
-                    fin_time2 = Convert.ToInt16(txtFin_Time.Text.Substring(2));
+                    end_hour = Convert.ToInt16(txtEnd_Time.Text.Substring(0, 2));
+                    end_min = Convert.ToInt16(txtEnd_Time.Text.Substring(2));
 
-                    DateTime startDateTime = new DateTime(start_year, start_date1, start_date2, start_time1, start_time2, sec);
-                    DateTime endDateTime = new DateTime(fin_year, fin_date1, fin_date2, fin_time1, fin_time2, sec);
+                    totalBreakTime = calcBreakTime(start_hour, start_min, end_hour, end_min);
+
+                    DateTime startDateTime = new DateTime(start_year, start_mon, start_day, start_hour, start_min, sec);
+                    DateTime endDateTime = new DateTime(end_year, end_mon, end_day, end_hour, end_min, sec);
 
                     TimeSpan timeSpan = endDateTime.Subtract(startDateTime);
 
@@ -516,8 +522,6 @@ namespace CO11N
                     calcMinute = Convert.ToUInt16(timeSpan.Minutes.ToString());
 
                     convertToMniute = ((calcDay * 24) + calcHour) * 60 + calcMinute;
-
-                    int totalBreakTime = 0;
 
                     totalPersonHour = Convert.ToInt16(txtPerson.Text) * ( convertToMniute - totalBreakTime);
                     txtBreak_Time.Text = Convert.ToString(totalBreakTime);
@@ -530,9 +534,36 @@ namespace CO11N
             }
         }
 
-        private void  txtFin_Time_KeyDown(object sender, KeyEventArgs e)
+        private int calcBreakTime(int start_hour, int start_min, int end_hour, int end_min)
         {
+            int totalBreakTime = 0;
+            TimeSpan tsStart = new TimeSpan( 0, start_hour, start_min, 0);
+            TimeSpan tsEnd = new TimeSpan(0, end_hour, end_min, 0);
 
+            // work time
+            TimeSpan amWorkStart = new TimeSpan(0, 8, 0, 0);
+            TimeSpan amWorkEnd = new TimeSpan(0, 12, 0, 0);
+            TimeSpan pmWorkStart = new TimeSpan(0, 13, 0, 0);
+            TimeSpan pmWorkEnd = new TimeSpan(0, 17, 0, 0);
+            TimeSpan ovWorkStart = new TimeSpan(0, 17, 30, 0);
+            TimeSpan ovWorkEnd = new TimeSpan(0, 19, 30, 0);
+
+            // break time
+            TimeSpan amBreakStart = new TimeSpan(0, 10, 00, 0);
+            TimeSpan amBreakEnd = new TimeSpan(0, 10, 10, 0);
+            TimeSpan noonBreakStart = new TimeSpan(0, 12, 0, 0);
+            TimeSpan noonBreakEnd = new TimeSpan(0, 13, 0, 0);
+            TimeSpan pmBreakStart = new TimeSpan(0, 15, 0, 0);
+            TimeSpan pmBreakEnd = new TimeSpan(0, 15, 10, 0);
+            TimeSpan ovBreakStart = new TimeSpan(0, 17, 0, 0);
+            TimeSpan ovBreakEnd = new TimeSpan(0, 17, 30, 0);
+
+            if (tsStart<amBreakStart &&  tsEnd >amBreakEnd) totalBreakTime += 10;
+            if (tsStart<noonBreakStart &&  tsEnd > noonBreakEnd) totalBreakTime += 60;
+            if (tsStart<pmBreakStart && tsEnd > pmBreakEnd) totalBreakTime += 10;
+            if (tsStart<ovBreakStart &&  tsEnd > ovWorkEnd) totalBreakTime += 30;
+
+            return totalBreakTime;
         }
 
         private void txtFin_Date_KeyDown(object sender, KeyEventArgs e)
@@ -549,9 +580,7 @@ namespace CO11N
             {
                 btnCalcTime_Click(sender, e);
             }
-        }
-
-        
+        }        
 
         private void buttime_Click_1(object sender, EventArgs e)
         {
