@@ -19,7 +19,6 @@ namespace CO11N
         string D_connIP, D_connUser, D_connPwd, D_status, D_connClient, D_connLanguage, D_RFCgetOrderDetail, D_RFCconfirmCommit,D_connNum, D_connSID;
         bool keyIsAccept;
 
-
         public Form1()
         {
             sapReportPrms sapReportPrms = new sapReportPrms();
@@ -47,7 +46,7 @@ namespace CO11N
           
           public class cboDataList
         {
-            public string cbo_Name { get; set; }
+            public string cbo_Name { get; set; } 
             public string cbo_Value { get; set; }
         }
 
@@ -177,7 +176,7 @@ namespace CO11N
 
             //回傳參數
             string returnMessageType = rfcFunc.GetValue("STYPE").ToString();
-            string status = rfcFunc.GetValue("STATUS").ToString();
+            string returnStatus = rfcFunc.GetValue("STATUS").ToString();
 
             string returnMessage = "";
             switch (returnMessageType)
@@ -189,7 +188,7 @@ namespace CO11N
                 case "A": returnMessage = "取消"; break;
             }
 
-            if (MessageBox.Show(status, returnMessage) == DialogResult.OK)
+            if (MessageBox.Show(returnStatus, returnMessage) == DialogResult.OK)
             {
                 btnClear.PerformClick();
             }
@@ -452,7 +451,7 @@ namespace CO11N
 }
 
         int start_time1, start_time2, fin_time1, fin_time2, sec, calcDay,calcHour,calcMinute;
-        int convertToMniute, totalManHour;
+        int convertToMniute, totalPersonHour;
 
         private void btnCalcTime_Click(object sender, EventArgs e)
         {
@@ -511,14 +510,36 @@ namespace CO11N
 
                     convertToMniute = ((calcDay * 24) + calcHour) * 60 + calcMinute;
 
-                    totalManHour = Convert.ToInt16(txtPerson.Text) * convertToMniute;
-                    txtActivity3.Text = Convert.ToString(totalManHour);
+                    int totalBreakTime = checkBreakTime(convertToMniute);
+
+                    totalPersonHour = Convert.ToInt16(txtPerson.Text) * ( convertToMniute - totalBreakTime);
+                    txtBreak_Time.Text = Convert.ToString(totalBreakTime);
+                    txtActivity3.Text = Convert.ToString(totalPersonHour);
                 }
             }
             catch (Exception)
             {
                 MessageBox.Show("日期格式有誤，請檢查");
             }
+        }
+
+        private int checkBreakTime(int convertToMniute)
+        {
+            int totalBreakTime = 0;
+            if (convertToMniute > 480 && convertToMniute < 960)
+            {
+                totalBreakTime += 110;
+            } else if (convertToMniute > 360 && convertToMniute < 480)
+            {
+                totalBreakTime += 80;
+            } else if (convertToMniute > 240 && convertToMniute < 360)
+            {
+                totalBreakTime += 70;
+            } else if (convertToMniute > 180 && convertToMniute < 240)
+            {
+                totalBreakTime += 10;
+            }
+            return totalBreakTime;
         }
 
         private void  txtFin_Time_KeyDown(object sender, KeyEventArgs e)
