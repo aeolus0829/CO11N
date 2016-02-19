@@ -302,8 +302,8 @@ namespace CO11N
             // e.KeyChar == (Char)8 -----------> Backpace
             // e.KeyChar == (Char)13-----------> Enter
 
-            // 數字鍵或是倒退鍵
-            if (!char.IsDigit(e.KeyChar) || e.KeyChar == (Char)8)
+            // 數字鍵或是倒退鍵            
+            if (!char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
             {
                 return true;
             } else
@@ -385,6 +385,21 @@ namespace CO11N
         }
 
         int start_year, fin_year, start_date1, start_date2, fin_date1, fin_date2;
+
+        private void txtStart_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            keyIsAccept = detectKey(e);
+
+            if (keyIsAccept)
+            {
+                e.Handled = true;
+            }
+            else
+            {
+                e.Handled = false;
+            }
+
+        }
 
         private void txtMachine_Calc(object sender, EventArgs e)
         {
