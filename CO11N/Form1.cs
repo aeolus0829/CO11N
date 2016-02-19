@@ -359,9 +359,9 @@ namespace CO11N
             {
                 try
                 {
-                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.WaitCursor;
+                    Cursor.Current = Cursors.WaitCursor;
                     btnPO_Click(sender, e);
-                    System.Windows.Forms.Cursor.Current = System.Windows.Forms.Cursors.Default;
+                    Cursor.Current = Cursors.Default;
                 }
                 catch (Exception)
                 {
@@ -426,7 +426,9 @@ namespace CO11N
                     double menTimeInMin, machineTimeInMin, calcMachineTime;
                     menTimeInMin = Convert.ToInt32(txtActivity3.Text);
                     machineTimeInMin = Convert.ToInt32(txtActivity2.Text);
+
                     calcMachineTime = menTimeInMin - machineTimeInMin;
+
                     if (calcMachineTime < 0) {
                         txtActivity3.Text = "1";
                     } else { 
@@ -500,7 +502,7 @@ namespace CO11N
 
                     convertToMniute = ((calcDay * 24) + calcHour) * 60 + calcMinute;
 
-                    int totalBreakTime = checkBreakTime(convertToMniute);
+                    int totalBreakTime = 0;
 
                     totalPersonHour = Convert.ToInt16(txtPerson.Text) * ( convertToMniute - totalBreakTime);
                     txtBreak_Time.Text = Convert.ToString(totalBreakTime);
@@ -511,25 +513,6 @@ namespace CO11N
             {
                 MessageBox.Show("日期格式有誤，請檢查");
             }
-        }
-
-        private int checkBreakTime(int convertToMniute)
-        {
-            int totalBreakTime = 0;
-            if (convertToMniute > 480 && convertToMniute < 960)
-            {
-                totalBreakTime += 110;
-            } else if (convertToMniute > 360 && convertToMniute < 480)
-            {
-                totalBreakTime += 80;
-            } else if (convertToMniute > 240 && convertToMniute < 360)
-            {
-                totalBreakTime += 70;
-            } else if (convertToMniute > 180 && convertToMniute < 240)
-            {
-                totalBreakTime += 10;
-            }
-            return totalBreakTime;
         }
 
         private void  txtFin_Time_KeyDown(object sender, KeyEventArgs e)
