@@ -384,16 +384,6 @@ namespace CO11N
             }
         }
 
-        private void txtStrat_Date_TabIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtStrat_Date_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         int start_year, fin_year, start_date1, start_date2, fin_date1, fin_date2;
 
         private void txtMachine_Calc(object sender, EventArgs e)
