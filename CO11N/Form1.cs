@@ -163,7 +163,7 @@ namespace CO11N
             if (txtEnd_Time.Text != "")
             rfcFunc.SetValue("FIN_TIME", txtEnd_Time.Text + "00");
             //休息時間
-            rfcFunc.SetValue("BREAK_TIME", txtBreak_Time.Text);
+            rfcFunc.SetValue("BREAK_TIME", txtBreakTime.Text);
             //休息時間單位
             rfcFunc.SetValue("BREAK_UNIT", txtBreak_Unit.Text);
             //確認內文
@@ -414,7 +414,7 @@ namespace CO11N
                 if (!string.IsNullOrEmpty(txtMachineTime.Text))
                 {
                     machineTimeInSec = Convert.ToInt32(txtMachineTime.Text);
-                    machineTimeInMin = Math.Round((orderQty * machineTimeInSec) / 60, 0);
+                    machineTimeInMin = Math.Ceiling((orderQty * machineTimeInSec) / 60);
                     txtActivity2.Text = machineTimeInMin.ToString();
                 }
                 else
@@ -460,7 +460,7 @@ namespace CO11N
 }
 
         int start_hour, start_min, end_hour, end_min, sec, calcDay,calcHour,calcMinute;
-        int convertToMniute, totalPersonHour;
+        int totalWorkMin, totalPersonHour;
 
         private void btnCalcTime_Click(object sender, EventArgs e)
         {
@@ -521,10 +521,10 @@ namespace CO11N
                     calcHour = Convert.ToUInt16(timeSpan.Hours.ToString());
                     calcMinute = Convert.ToUInt16(timeSpan.Minutes.ToString());
 
-                    convertToMniute = ((calcDay * 24) + calcHour) * 60 + calcMinute;
+                    totalWorkMin = ((calcDay * 24) + calcHour) * 60 + calcMinute;
 
-                    totalPersonHour = Convert.ToInt16(txtPerson.Text) * ( convertToMniute - totalBreakTime);
-                    txtBreak_Time.Text = Convert.ToString(totalBreakTime);
+                    totalPersonHour = totalWorkMin - (totalBreakTime * Convert.ToInt16(txtPerson.Text));
+                    txtBreakTime.Text = (Convert.ToInt16(totalBreakTime) * Convert.ToInt16(txtPerson.Text)).ToString();
                     txtActivity3.Text = Convert.ToString(totalPersonHour);
                 }
             }
@@ -558,10 +558,10 @@ namespace CO11N
             TimeSpan ovBreakStart = new TimeSpan(0, 17, 0, 0);
             TimeSpan ovBreakEnd = new TimeSpan(0, 17, 30, 0);
 
-            if (tsStart<amBreakStart &&  tsEnd >amBreakEnd) totalBreakTime += 10;
-            if (tsStart<noonBreakStart &&  tsEnd > noonBreakEnd) totalBreakTime += 60;
-            if (tsStart<pmBreakStart && tsEnd > pmBreakEnd) totalBreakTime += 10;
-            if (tsStart<ovBreakStart &&  tsEnd > ovWorkEnd) totalBreakTime += 30;
+            if (tsStart < amBreakStart && tsEnd > amBreakEnd) totalBreakTime += 10; //早上休息十分
+            if (tsStart < noonBreakStart && tsEnd > noonBreakEnd) totalBreakTime += 60; //中午休息六十分
+            if (tsStart < pmBreakStart && tsEnd > pmBreakEnd) totalBreakTime += 10; //下午休息十分
+            if (tsStart < ovBreakStart && tsEnd > ovWorkEnd) totalBreakTime += 30; //加班休息三十分 
 
             return totalBreakTime;
         }
