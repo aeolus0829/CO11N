@@ -16,8 +16,11 @@ namespace CO11N
 {
     public partial class Form1 : Form
     {
-        string D_connIP, D_connUser, D_connPwd, D_status, D_connClient, D_connLanguage, D_RFCgetOrderDetail, D_RFCconfirmCommit,D_connNum, D_connSID;
-        bool keyIsAccept;
+        string D_connIP, D_connUser, D_connPwd, D_status, D_connClient, D_connLanguage, D_RFCgetOrderDetail, D_RFCconfirmCommit, D_connNum, D_connSID, winFormVersion;
+        bool keyIsAccept, TESTING;
+        int start_hour, start_min, end_hour, end_min, sec, calcDay, calcHour, calcMinute;
+        int totalWorkMin, totalPersonHour;
+
 
         public Form1()
         {
@@ -25,15 +28,19 @@ namespace CO11N
             string[] ALL = sapReportPrms.SQL();
 
             // 連線字串
-            D_connIP = "192.168.0.15";
+            D_connIP = "192.168.0.16";
+            D_connClient = "800";
+            D_connSID = "PRD";
             D_connUser = "DDIC";
             D_connPwd = "Ubn3dx";
             D_status = ALL[4];
-            D_connClient = "620";
             D_connLanguage = "ZF";
             D_RFCgetOrderDetail = "ZPPRFC006"; //讀取工單資料
             D_RFCconfirmCommit = "ZPPRFC005"; //送出報工結果
-            D_connSID = "DEV";
+
+            //開發資訊
+            TESTING = false;
+            winFormVersion = "1.07";
 
             if (D_status == "False")
             {
@@ -52,7 +59,9 @@ namespace CO11N
 
         private void Form1_Load(object sender, EventArgs e)
         {
-                      
+            if (TESTING) this.Text += winFormVersion + " 測試版 " + " / SAP資料環境: " + D_connClient;
+            else this.Text += winFormVersion;
+
             List<cboDataList> lis_DataList = new List<cboDataList>()
             {
                 new cboDataList
@@ -95,6 +104,7 @@ namespace CO11N
 
         private void btnSubmin_Click(object sender, EventArgs e)
         {
+            Cursor.Current = Cursors.WaitCursor;
             string windowsAccount = Environment.UserName;      
 
             RfcConfigParameters rfcPara = new RfcConfigParameters();
@@ -192,6 +202,7 @@ namespace CO11N
             {
                 btnClear.PerformClick();
             }
+            Cursor.Current = Cursors.Default;
         }
 
 
@@ -444,7 +455,7 @@ namespace CO11N
                     menTimeInMin = Convert.ToInt32(txtActivity3.Text);
                     machineTimeInMin = Convert.ToInt32(txtActivity2.Text);
 
-                    calcMachineTime = menTimeInMin - machineTimeInMin;
+                    calcMachineTime = menTimeInMin  - machineTimeInMin;
 
                     if (calcMachineTime < 0) {
                         txtActivity3.Text = "1";
@@ -458,9 +469,6 @@ namespace CO11N
                 }
             }
 }
-
-        int start_hour, start_min, end_hour, end_min, sec, calcDay,calcHour,calcMinute;
-        int totalWorkMin, totalPersonHour;
 
         private void btnCalcTime_Click(object sender, EventArgs e)
         {
@@ -521,7 +529,7 @@ namespace CO11N
                     calcHour = Convert.ToUInt16(timeSpan.Hours.ToString());
                     calcMinute = Convert.ToUInt16(timeSpan.Minutes.ToString());
 
-                    totalWorkMin = ((calcDay * 24) + calcHour) * 60 + calcMinute;
+                    totalWorkMin = (((calcDay * 24) + calcHour) * 60 + calcMinute) * Convert.ToInt16(txtPerson.Text);
 
                     totalPersonHour = totalWorkMin - (totalBreakTime * Convert.ToInt16(txtPerson.Text));
                     txtBreakTime.Text = (Convert.ToInt16(totalBreakTime) * Convert.ToInt16(txtPerson.Text)).ToString();
@@ -561,7 +569,7 @@ namespace CO11N
             if (tsStart < amBreakStart && tsEnd > amBreakEnd) totalBreakTime += 10; //早上休息十分
             if (tsStart < noonBreakStart && tsEnd > noonBreakEnd) totalBreakTime += 60; //中午休息六十分
             if (tsStart < pmBreakStart && tsEnd > pmBreakEnd) totalBreakTime += 10; //下午休息十分
-            if (tsStart < ovBreakStart && tsEnd > ovWorkEnd) totalBreakTime += 30; //加班休息三十分 
+            if (tsStart < ovBreakStart && tsEnd > ovBreakEnd) totalBreakTime += 30; //加班休息三十分 
 
             return totalBreakTime;
         }
