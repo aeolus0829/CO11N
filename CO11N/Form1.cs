@@ -1,16 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-
 using SAP.Middleware.Connector;
-
-using System.Data.SqlClient;
-using System.Collections;
+using connDB;
 
 namespace CO11N
 {
@@ -26,6 +19,7 @@ namespace CO11N
         {
             sapReportPrms sapReportPrms = new sapReportPrms();
             string[] ALL = sapReportPrms.SQL();
+            
 
             // 連線字串
             D_connIP = "192.168.0.16";
