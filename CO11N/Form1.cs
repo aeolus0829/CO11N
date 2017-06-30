@@ -9,7 +9,7 @@ namespace CO11N
 {
     public partial class Form1 : Form
     {
-        string D_connIP, D_connUser, D_connPwd, D_status, D_connClient, D_connLanguage, D_RFCgetOrderDetail, D_RFCconfirmCommit, D_connNum, D_connSID, winFormVersion;
+        string GetOrderDetail, confirmCommit, winFormVersion;
         bool keyIsAccept, TESTING;
         int start_hour, start_min, end_hour, end_min, sec, calcDay, calcHour, calcMinute;
         int totalWorkMin, totalPersonHour;
@@ -17,32 +17,22 @@ namespace CO11N
 
         public Form1()
         {
-            sapReportPrms sapReportPrms = new sapReportPrms();
-            string[] ALL = sapReportPrms.SQL();
-            
-
             // 連線字串
-            D_connIP = "192.168.0.16";
-            D_connClient = "800";
-            D_connSID = "PRD";
-            D_connUser = "DDIC";
-            D_connPwd = "Ubn3dx";
-            D_status = ALL[4];
-            D_connLanguage = "ZF";
-            D_RFCgetOrderDetail = "ZPPRFC006"; //讀取工單資料
-            D_RFCconfirmCommit = "ZPPRFC005"; //送出報工結果
+            GetOrderDetail = "ZPPRFC006"; //讀取工單資料
+            confirmCommit = "ZPPRFC005"; //送出報工結果
 
             //開發資訊
-            TESTING = false;
+            TESTING = true;
+            formName = "CO11N";
             winFormVersion = "1.07";
+            connClient = "620";
 
-            if (D_status == "False")
-            {
-                MessageBox.Show("目前程式停用中，請連絡資訊組");            
-            }
-            else {
-                InitializeComponent();
-            }
+            //檢查程式是否停用
+            chkFormStatusClass chkForm = new chkFormStatusClass();
+            isFormActive = chkForm.isFormActive(formName);
+
+            if (isFormActive) InitializeComponent();
+            else MessageBox.Show("目前程式停用中，可能是特定時間或缺乏使用權限，請連絡資訊組");
         }
           
           public class cboDataList
@@ -53,7 +43,7 @@ namespace CO11N
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (TESTING) this.Text += winFormVersion + " 測試版 " + " / SAP資料環境: " + D_connClient;
+            if (TESTING) this.Text += winFormVersion + " 測試版 " + " / SAP資料環境: " + connClient;
             else this.Text += winFormVersion;
 
             List<cboDataList> lis_DataList = new List<cboDataList>()
@@ -99,22 +89,17 @@ namespace CO11N
         private void btnSubmin_Click(object sender, EventArgs e)
         {
             Cursor.Current = Cursors.WaitCursor;
-            string windowsAccount = Environment.UserName;      
+            string windowsAccount = Environment.UserName;
 
-            RfcConfigParameters rfcPara = new RfcConfigParameters();
-            rfcPara.Add(RfcConfigParameters.Name, D_connSID);
-            rfcPara.Add(RfcConfigParameters.AppServerHost,D_connIP);
-            rfcPara.Add(RfcConfigParameters.Client,  D_connClient);
-            rfcPara.Add(RfcConfigParameters.User,D_connUser);
-            rfcPara.Add(RfcConfigParameters.Password, D_connPwd);
-            rfcPara.Add(RfcConfigParameters.SystemNumber, "00");
-            rfcPara.Add(RfcConfigParameters.Language,D_connLanguage);
-            RfcDestination rfcDest = RfcDestinationManager.GetDestination(rfcPara);
-            RfcRepository rfcrep = rfcDest.Repository;
-
+            sapConnClass sc = new sapConnClass();
+            var rfcPara = sc.setParaToConn(connClient);
+            var rfcDest = RfcDestinationManager.GetDestination(rfcPara);
+            var rfcRepo = rfcDest.Repository;
             IRfcFunction rfcFunc = null;
+
+
             //函數名稱
-            rfcFunc = rfcrep.CreateFunction(D_RFCconfirmCommit);
+            rfcFunc = rfcRepo.CreateFunction(confirmCommit);
             //設置輸入參數
             //工單號碼
             rfcFunc.SetValue("AUFNR", txtAufnr.Text);
@@ -179,23 +164,39 @@ namespace CO11N
             rfcFunc.Invoke(rfcDest);
 
             //回傳參數
-            string returnMessageType = rfcFunc.GetValue("STYPE").ToString();
-            string returnStatus = rfcFunc.GetValue("STATUS").ToString();
+            string rfcMessageType = rfcFunc.GetValue("STYPE").ToString();
+            string rfcStatus = rfcFunc.GetValue("STATUS").ToString();
+            string rfcReturn = rfcFunc.GetValue("RETURN").ToString();
 
-            string returnMessage = "";
-            switch (returnMessageType)
+            string rfcMessageTypeDesc = "";
+            switch (rfcMessageType)
             {
-                case "S": returnMessage = "成功"; break;
-                case "E": returnMessage = "錯誤"; break;
-                case "W": returnMessage = "警告"; break;
-                case "I": returnMessage = "資訊"; break;
-                case "A": returnMessage = "取消"; break;
+                case "S": rfcMessageTypeDesc = "成功"; break;
+                case "E":
+                    rfcMessageTypeDesc = "錯誤";
+                    if (! string.IsNullOrEmpty(rfcReturn))
+                    {
+                        rfcStatus = "物料異動有問題" 
+                            + rfcReturn + Environment.NewLine 
+                            + "請通知生管人員！！";
+                    }
+                    break;
+                case "W": rfcMessageTypeDesc = "警告"; break;
+                case "I": rfcMessageTypeDesc = "資訊"; break;
+                case "A": rfcMessageTypeDesc = "取消"; break;
             }
 
-            if (MessageBox.Show(returnStatus, returnMessage) == DialogResult.OK)
+            if (rfcMessageType == "E" || rfcMessageType == "A")
             {
+                btnSubmin.Enabled = false;
+                MessageBox.Show(rfcStatus, rfcMessageTypeDesc);
+            } 
+            else
+            {
+                MessageBox.Show(rfcStatus, rfcMessageTypeDesc);
                 btnClear.PerformClick();
             }
+
             Cursor.Current = Cursors.Default;
         }
 
@@ -215,21 +216,15 @@ namespace CO11N
 
         private void btnPO_Click(object sender, EventArgs e)
         {
-            RfcConfigParameters rfcPara = new RfcConfigParameters();
-            rfcPara.Add(RfcConfigParameters.Name, D_connSID);
-            rfcPara.Add(RfcConfigParameters.AppServerHost, D_connIP);
-            rfcPara.Add(RfcConfigParameters.Client,  D_connClient);
-            rfcPara.Add(RfcConfigParameters.User, D_connUser);
-            rfcPara.Add(RfcConfigParameters.Password, D_connPwd);
-            rfcPara.Add(RfcConfigParameters.SystemNumber, D_connNum);
-            rfcPara.Add(RfcConfigParameters.Language, D_connLanguage);
-            RfcDestination rfcDest = RfcDestinationManager.GetDestination(rfcPara);
-            RfcRepository rfcRepo = rfcDest.Repository;
+            sapConnClass sc = new sapConnClass();
+            var rfcPara = sc.setParaToConn(connClient);
+            var rfcDest = RfcDestinationManager.GetDestination(rfcPara);
+            var rfcRepo = rfcDest.Repository;
 
             IRfcFunction rfcFunc = null;
 
             // rfc 函數名稱
-            rfcFunc = rfcRepo.CreateFunction(D_RFCgetOrderDetail);
+            rfcFunc = rfcRepo.CreateFunction(GetOrderDetail);
             //輸入參數：工單號碼
             rfcFunc.SetValue("P_AUFNR", txtAufnr.Text.ToString().Trim());
             // Call function.
@@ -390,6 +385,10 @@ namespace CO11N
         }
 
         int start_year, end_year, start_mon, start_day, end_mon, end_day;
+
+        public string formName { get; private set; }
+        public string connClient { get; private set; }
+        public bool isFormActive { get; private set; }
 
         private void txtStart_KeyPress(object sender, KeyPressEventArgs e)
         {
