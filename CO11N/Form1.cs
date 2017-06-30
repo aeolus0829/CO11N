@@ -9,7 +9,7 @@ namespace CO11N
 {
     public partial class Form1 : Form
     {
-        string GetOrderDetail, confirmCommit, winFormVersion;
+        string getPODetail, confirmCommit, winFormVersion;
         bool keyIsAccept, TESTING;
         int start_hour, start_min, end_hour, end_min, sec, calcDay, calcHour, calcMinute;
         int totalWorkMin, totalPersonHour;
@@ -18,7 +18,7 @@ namespace CO11N
         public Form1()
         {
             // 連線字串
-            GetOrderDetail = "ZPPRFC006"; //讀取工單資料
+            getPODetail = "ZPPRFC006"; //讀取工單資料
             confirmCommit = "ZPPRFC005"; //送出報工結果
 
             //開發資訊
@@ -95,89 +95,89 @@ namespace CO11N
             var rfcPara = sc.setParaToConn(connClient);
             var rfcDest = RfcDestinationManager.GetDestination(rfcPara);
             var rfcRepo = rfcDest.Repository;
-            IRfcFunction rfcFunc = null;
+            IRfcFunction confirmRFC = null;
 
 
             //函數名稱
-            rfcFunc = rfcRepo.CreateFunction(confirmCommit);
+            confirmRFC = rfcRepo.CreateFunction(confirmCommit);
             //設置輸入參數
             //工單號碼
-            rfcFunc.SetValue("AUFNR", txtAufnr.Text);
+            confirmRFC.SetValue("AUFNR", txtAufnr.Text);
             //作業
-            rfcFunc.SetValue("OPERATION", txtOperation.Text);
+            confirmRFC.SetValue("OPERATION", txtOperation.Text);
             //確認良品率
-            rfcFunc.SetValue("YIELD", txtYield.Text);
+            confirmRFC.SetValue("YIELD", txtYield.Text);
             //廢品
-            rfcFunc.SetValue("SCRAP", txtScrap.Text);
+            confirmRFC.SetValue("SCRAP", txtScrap.Text);
             //重工
-            rfcFunc.SetValue("REWORK", txtRework.Text);
+            confirmRFC.SetValue("REWORK", txtRework.Text);
             //差異原因
-            rfcFunc.SetValue("REASON", comboBox1.SelectedValue);
+            confirmRFC.SetValue("REASON", comboBox1.SelectedValue);
             //數量單位
-            rfcFunc.SetValue("QUANUNIT", txtQuanunit.Text);
+            confirmRFC.SetValue("QUANUNIT", txtQuanunit.Text);
             //整備
-            rfcFunc.SetValue("ACTIVITY1", txtActivity1.Text);
+            confirmRFC.SetValue("ACTIVITY1", txtActivity1.Text);
             //整備單位
-            rfcFunc.SetValue("ACTIUNIT1", txtActiunit1.Text);
+            confirmRFC.SetValue("ACTIUNIT1", txtActiunit1.Text);
             //機器
-            rfcFunc.SetValue("ACTIVITY2", txtActivity2.Text);
+            confirmRFC.SetValue("ACTIVITY2", txtActivity2.Text);
             //機器單位
-            rfcFunc.SetValue("ACTIUNIT2", txtActiunit2.Text);
+            confirmRFC.SetValue("ACTIUNIT2", txtActiunit2.Text);
             //人工
-            rfcFunc.SetValue("ACTIVITY3", txtActivity3.Text);
+            confirmRFC.SetValue("ACTIVITY3", txtActivity3.Text);
             //人工單位
-            rfcFunc.SetValue("ACTIUNIT3", txtActiunit3.Text);
+            confirmRFC.SetValue("ACTIUNIT3", txtActiunit3.Text);
             //製造費用-其他
-            rfcFunc.SetValue("ACTIVITY4", txtActivity4.Text);
+            confirmRFC.SetValue("ACTIVITY4", txtActivity4.Text);
             //製造費用-其他單位
-            rfcFunc.SetValue("ACTIUNIT4", txtActiunit4.Text);
+            confirmRFC.SetValue("ACTIUNIT4", txtActiunit4.Text);
             //製造費用-間接人工
-            rfcFunc.SetValue("ACTIVITY5", txtActivity5.Text);
+            confirmRFC.SetValue("ACTIVITY5", txtActivity5.Text);
             //製造費用-間接人工單位
-            rfcFunc.SetValue("ACTIUNIT5", txtActiunit5.Text);
+            confirmRFC.SetValue("ACTIUNIT5", txtActiunit5.Text);
             //製造費用-折舊
-            rfcFunc.SetValue("ACTIVITY6", txtActivity6.Text);
+            confirmRFC.SetValue("ACTIVITY6", txtActivity6.Text);
             //製造費用-折舊單位
-            rfcFunc.SetValue("ACTIUNIT6", txtActiunit6.Text);
+            confirmRFC.SetValue("ACTIUNIT6", txtActiunit6.Text);
             //過帳日期
-            rfcFunc.SetValue("POSTG_DATE", Convert.ToDateTime(dtpPostgdate.Value.Date).ToString("yyyyMMdd"));
+            confirmRFC.SetValue("POSTG_DATE", Convert.ToDateTime(dtpPostgdate.Value.Date).ToString("yyyyMMdd"));
             //開時執行日期
-            rfcFunc.SetValue("START_DATE", txtStart_Date.Text);
+            confirmRFC.SetValue("START_DATE", txtStart_Date.Text);
             //開始執行時間
             if(txtStart_Time.Text != "") 
-            rfcFunc.SetValue("START_TIME", txtStart_Time.Text + "00");
+            confirmRFC.SetValue("START_TIME", txtStart_Time.Text + "00");
             //完成執行日期
-            rfcFunc.SetValue("FIN_DATE", txtEnd_Date.Text);
+            confirmRFC.SetValue("FIN_DATE", txtEnd_Date.Text);
             //完成執行時間
             if (txtEnd_Time.Text != "")
-            rfcFunc.SetValue("FIN_TIME", txtEnd_Time.Text + "00");
+            confirmRFC.SetValue("FIN_TIME", txtEnd_Time.Text + "00");
             //休息時間
-            rfcFunc.SetValue("BREAK_TIME", txtBreakTime.Text);
+            confirmRFC.SetValue("BREAK_TIME", txtBreakTime.Text);
             //休息時間單位
-            rfcFunc.SetValue("BREAK_UNIT", txtBreak_Unit.Text);
+            confirmRFC.SetValue("BREAK_UNIT", txtBreak_Unit.Text);
             //確認內文
-            rfcFunc.SetValue("CONF_TEXT", txtConf_Text.Text);
+            confirmRFC.SetValue("CONF_TEXT", txtConf_Text.Text);
             //外部確認者
-            rfcFunc.SetValue("EX_CREATED_BY", windowsAccount);
+            confirmRFC.SetValue("EX_CREATED_BY", windowsAccount);
 
             // Call function.
-            rfcFunc.Invoke(rfcDest);
+            confirmRFC.Invoke(rfcDest);
 
             //回傳參數
-            string rfcMessageType = rfcFunc.GetValue("STYPE").ToString();
-            string rfcStatus = rfcFunc.GetValue("STATUS").ToString();
-            string rfcReturn = rfcFunc.GetValue("RETURN").ToString();
+            var rfcMessageType = confirmRFC.GetValue("STYPE").ToString();
+            var rfcStatus = confirmRFC.GetValue("STATUS").ToString();
+            //var rfcReturn = rfcFunc.GetValue("RETURN").ToString();
 
-            string rfcMessageTypeDesc = "";
+            var rfcMessageTypeDesc = "";
             switch (rfcMessageType)
             {
                 case "S": rfcMessageTypeDesc = "成功"; break;
                 case "E":
                     rfcMessageTypeDesc = "錯誤";
-                    if (! string.IsNullOrEmpty(rfcReturn))
+                    if (! string.IsNullOrEmpty(rfcStatus))
                     {
                         rfcStatus = "物料異動有問題" 
-                            + rfcReturn + Environment.NewLine 
+                            + rfcStatus + Environment.NewLine 
                             + "請通知生管人員！！";
                     }
                     break;
@@ -221,16 +221,16 @@ namespace CO11N
             var rfcDest = RfcDestinationManager.GetDestination(rfcPara);
             var rfcRepo = rfcDest.Repository;
 
-            IRfcFunction rfcFunc = null;
+            IRfcFunction getPORFC = null;
 
             // rfc 函數名稱
-            rfcFunc = rfcRepo.CreateFunction(GetOrderDetail);
+            getPORFC = rfcRepo.CreateFunction(getPODetail);
             //輸入參數：工單號碼
-            rfcFunc.SetValue("P_AUFNR", txtAufnr.Text.ToString().Trim());
+            getPORFC.SetValue("P_AUFNR", txtAufnr.Text.ToString().Trim());
             // Call function.
-            rfcFunc.Invoke(rfcDest);
+            getPORFC.Invoke(rfcDest);
             //回傳內表
-            IRfcTable ITAB = rfcFunc.GetTable("ITAB");
+            IRfcTable ITAB = getPORFC.GetTable("ITAB");
             DataTable dt = new DataTable();
             dt.Columns.Add("作業號碼");
             dt.Columns.Add("作業短文");
@@ -250,11 +250,11 @@ namespace CO11N
             dataGridView1.ReadOnly = true;
 
             // rfc 回傳參數
-            string KDAUF = rfcFunc.GetValue("KDAUF").ToString().TrimStart('0');
-            string KDPOS = rfcFunc.GetValue("KDPOS").ToString().TrimStart('0');
-            string PSMNG = rfcFunc.GetValue("PSMNG").ToString().TrimEnd('0').TrimEnd('.');
-            string DGLTS = rfcFunc.GetValue("DGLTS").ToString();
-            string USER_LINE = rfcFunc.GetValue("USER_LINE").ToString();
+            string KDAUF = getPORFC.GetValue("KDAUF").ToString().TrimStart('0');
+            string KDPOS = getPORFC.GetValue("KDPOS").ToString().TrimStart('0');
+            string PSMNG = getPORFC.GetValue("PSMNG").ToString().TrimEnd('0').TrimEnd('.');
+            string DGLTS = getPORFC.GetValue("DGLTS").ToString();
+            string USER_LINE = getPORFC.GetValue("USER_LINE").ToString();
 
             lblQty.Text = "工單數量：" + PSMNG;
             lblStatus.Text = "使用者自定狀態：" + USER_LINE;
