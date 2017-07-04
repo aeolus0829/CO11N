@@ -56,20 +56,20 @@
             this.label18 = new System.Windows.Forms.Label();
             this.txtConf_Text = new System.Windows.Forms.TextBox();
             this.txtBreak_Unit = new System.Windows.Forms.TextBox();
-            this.txtBreak_Time = new System.Windows.Forms.TextBox();
+            this.txtBreakTime = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtYield = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.dtpPostgdate = new System.Windows.Forms.DateTimePicker();
             this.label19 = new System.Windows.Forms.Label();
-            this.txtStrat_Date = new System.Windows.Forms.TextBox();
+            this.txtStart_Date = new System.Windows.Forms.TextBox();
             this.txtStart_Time = new System.Windows.Forms.TextBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.txtFin_Time = new System.Windows.Forms.TextBox();
-            this.txtFin_Date = new System.Windows.Forms.TextBox();
+            this.txtEnd_Time = new System.Windows.Forms.TextBox();
+            this.txtEnd_Date = new System.Windows.Forms.TextBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtPerson = new System.Windows.Forms.TextBox();
             this.btnSubmin = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.txtScrap = new System.Windows.Forms.TextBox();
@@ -78,7 +78,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.buttime = new System.Windows.Forms.Button();
+            this.btnCalcTime = new System.Windows.Forms.Button();
             this.lblWorkHourMessage = new System.Windows.Forms.Label();
             this.btnPO = new System.Windows.Forms.Button();
             this.txtQuanunit = new System.Windows.Forms.TextBox();
@@ -138,20 +138,20 @@
             this.tableLayoutPanel1.Controls.Add(this.label18, 0, 13);
             this.tableLayoutPanel1.Controls.Add(this.txtConf_Text, 1, 13);
             this.tableLayoutPanel1.Controls.Add(this.txtBreak_Unit, 2, 11);
-            this.tableLayoutPanel1.Controls.Add(this.txtBreak_Time, 1, 11);
+            this.tableLayoutPanel1.Controls.Add(this.txtBreakTime, 1, 11);
             this.tableLayoutPanel1.Controls.Add(this.label17, 0, 11);
             this.tableLayoutPanel1.Controls.Add(this.label4, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.txtYield, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.label16, 0, 12);
             this.tableLayoutPanel1.Controls.Add(this.dtpPostgdate, 1, 12);
             this.tableLayoutPanel1.Controls.Add(this.label19, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.txtStrat_Date, 1, 4);
+            this.tableLayoutPanel1.Controls.Add(this.txtStart_Date, 1, 4);
             this.tableLayoutPanel1.Controls.Add(this.txtStart_Time, 2, 4);
             this.tableLayoutPanel1.Controls.Add(this.label20, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.txtFin_Time, 2, 5);
-            this.tableLayoutPanel1.Controls.Add(this.txtFin_Date, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.txtEnd_Time, 2, 5);
+            this.tableLayoutPanel1.Controls.Add(this.txtEnd_Date, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.label21, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 1, 6);
+            this.tableLayoutPanel1.Controls.Add(this.txtPerson, 1, 6);
             this.tableLayoutPanel1.Controls.Add(this.btnSubmin, 3, 10);
             this.tableLayoutPanel1.Controls.Add(this.btnClear, 4, 10);
             this.tableLayoutPanel1.Controls.Add(this.label5, 0, 2);
@@ -161,7 +161,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label7, 4, 2);
             this.tableLayoutPanel1.Controls.Add(this.comboBox1, 5, 2);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttime, 5, 10);
+            this.tableLayoutPanel1.Controls.Add(this.btnCalcTime, 5, 10);
             this.tableLayoutPanel1.Controls.Add(this.lblWorkHourMessage, 0, 10);
             this.tableLayoutPanel1.Controls.Add(this.btnPO, 4, 0);
             this.tableLayoutPanel1.Controls.Add(this.txtQuanunit, 4, 1);
@@ -446,14 +446,14 @@
             this.txtBreak_Unit.TabStop = false;
             this.txtBreak_Unit.Text = "MIN";
             // 
-            // txtBreak_Time
+            // txtBreakTime
             // 
-            this.txtBreak_Time.Font = new System.Drawing.Font("PMingLiU", 12F);
-            this.txtBreak_Time.Location = new System.Drawing.Point(197, 375);
-            this.txtBreak_Time.Name = "txtBreak_Time";
-            this.txtBreak_Time.Size = new System.Drawing.Size(66, 27);
-            this.txtBreak_Time.TabIndex = 33;
-            this.txtBreak_Time.Text = "0";
+            this.txtBreakTime.Font = new System.Drawing.Font("PMingLiU", 12F);
+            this.txtBreakTime.Location = new System.Drawing.Point(197, 375);
+            this.txtBreakTime.Name = "txtBreakTime";
+            this.txtBreakTime.Size = new System.Drawing.Size(66, 27);
+            this.txtBreakTime.TabIndex = 33;
+            this.txtBreakTime.Text = "0";
             // 
             // label17
             // 
@@ -482,7 +482,6 @@
             this.txtYield.Name = "txtYield";
             this.txtYield.Size = new System.Drawing.Size(45, 27);
             this.txtYield.TabIndex = 3;
-            this.txtYield.Text = "0";
             // 
             // label16
             // 
@@ -513,16 +512,15 @@
             this.label19.TabIndex = 94;
             this.label19.Text = "開始執行(日期/時間)";
             // 
-            // txtStrat_Date
+            // txtStart_Date
             // 
-            this.txtStrat_Date.Font = new System.Drawing.Font("PMingLiU", 12F);
-            this.txtStrat_Date.Location = new System.Drawing.Point(197, 103);
-            this.txtStrat_Date.MaxLength = 8;
-            this.txtStrat_Date.Name = "txtStrat_Date";
-            this.txtStrat_Date.Size = new System.Drawing.Size(100, 27);
-            this.txtStrat_Date.TabIndex = 7;
-            this.txtStrat_Date.TextChanged += new System.EventHandler(this.txtStrat_Date_TextChanged);
-            this.txtStrat_Date.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtStart_Date_KeyPress);
+            this.txtStart_Date.Font = new System.Drawing.Font("PMingLiU", 12F);
+            this.txtStart_Date.Location = new System.Drawing.Point(197, 103);
+            this.txtStart_Date.MaxLength = 8;
+            this.txtStart_Date.Name = "txtStart_Date";
+            this.txtStart_Date.Size = new System.Drawing.Size(100, 27);
+            this.txtStart_Date.TabIndex = 7;
+            this.txtStart_Date.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtStart_KeyPress);
             // 
             // txtStart_Time
             // 
@@ -544,26 +542,26 @@
             this.label20.TabIndex = 39;
             this.label20.Text = "完成執行(日期/時間)";
             // 
-            // txtFin_Time
+            // txtEnd_Time
             // 
-            this.txtFin_Time.BackColor = System.Drawing.SystemColors.Window;
-            this.txtFin_Time.Font = new System.Drawing.Font("PMingLiU", 12F);
-            this.txtFin_Time.Location = new System.Drawing.Point(333, 138);
-            this.txtFin_Time.MaxLength = 4;
-            this.txtFin_Time.Name = "txtFin_Time";
-            this.txtFin_Time.Size = new System.Drawing.Size(66, 27);
-            this.txtFin_Time.TabIndex = 10;
+            this.txtEnd_Time.BackColor = System.Drawing.SystemColors.Window;
+            this.txtEnd_Time.Font = new System.Drawing.Font("PMingLiU", 12F);
+            this.txtEnd_Time.Location = new System.Drawing.Point(333, 138);
+            this.txtEnd_Time.MaxLength = 4;
+            this.txtEnd_Time.Name = "txtEnd_Time";
+            this.txtEnd_Time.Size = new System.Drawing.Size(66, 27);
+            this.txtEnd_Time.TabIndex = 10;
             // 
-            // txtFin_Date
+            // txtEnd_Date
             // 
-            this.txtFin_Date.Font = new System.Drawing.Font("PMingLiU", 12F);
-            this.txtFin_Date.Location = new System.Drawing.Point(197, 138);
-            this.txtFin_Date.MaxLength = 8;
-            this.txtFin_Date.Name = "txtFin_Date";
-            this.txtFin_Date.Size = new System.Drawing.Size(100, 27);
-            this.txtFin_Date.TabIndex = 9;
-            this.txtFin_Date.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFin_Date_KeyDown);
-            this.txtFin_Date.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFin_Date_KeyPress);
+            this.txtEnd_Date.Font = new System.Drawing.Font("PMingLiU", 12F);
+            this.txtEnd_Date.Location = new System.Drawing.Point(197, 138);
+            this.txtEnd_Date.MaxLength = 8;
+            this.txtEnd_Date.Name = "txtEnd_Date";
+            this.txtEnd_Date.Size = new System.Drawing.Size(100, 27);
+            this.txtEnd_Date.TabIndex = 9;
+            this.txtEnd_Date.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFin_Date_KeyDown);
+            this.txtEnd_Date.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFin_Date_KeyPress);
             // 
             // label21
             // 
@@ -575,16 +573,16 @@
             this.label21.TabIndex = 95;
             this.label21.Text = "投入人數";
             // 
-            // textBox1
+            // txtPerson
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.textBox1.Location = new System.Drawing.Point(197, 175);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(33, 27);
-            this.textBox1.TabIndex = 21;
-            this.textBox1.Text = "1";
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
-            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.txtPerson.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.txtPerson.Location = new System.Drawing.Point(197, 175);
+            this.txtPerson.Name = "txtPerson";
+            this.txtPerson.Size = new System.Drawing.Size(33, 27);
+            this.txtPerson.TabIndex = 21;
+            this.txtPerson.Text = "1";
+            this.txtPerson.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.txtPerson.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
             // btnSubmin
             // 
@@ -627,6 +625,7 @@
             // 
             // txtRework
             // 
+            this.txtRework.Enabled = false;
             this.txtRework.Font = new System.Drawing.Font("PMingLiU", 12F);
             this.txtRework.Location = new System.Drawing.Point(405, 72);
             this.txtRework.Name = "txtRework";
@@ -664,17 +663,18 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "工單號碼";
             // 
-            // buttime
+            // btnCalcTime
             // 
-            this.buttime.Location = new System.Drawing.Point(615, 330);
-            this.buttime.Name = "buttime";
-            this.buttime.Size = new System.Drawing.Size(90, 33);
-            this.buttime.TabIndex = 99;
-            this.buttime.TabStop = false;
-            this.buttime.Text = "計算時間";
-            this.buttime.UseVisualStyleBackColor = true;
-            this.buttime.Visible = false;
-            this.buttime.Click += new System.EventHandler(this.buttime_Click_1);
+            this.btnCalcTime.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.btnCalcTime.Location = new System.Drawing.Point(615, 330);
+            this.btnCalcTime.Name = "btnCalcTime";
+            this.btnCalcTime.Size = new System.Drawing.Size(90, 33);
+            this.btnCalcTime.TabIndex = 99;
+            this.btnCalcTime.TabStop = false;
+            this.btnCalcTime.Text = "計算時間";
+            this.btnCalcTime.UseVisualStyleBackColor = false;
+            this.btnCalcTime.Visible = false;
+            this.btnCalcTime.Click += new System.EventHandler(this.btnCalcTime_Click);
             // 
             // lblWorkHourMessage
             // 
@@ -688,13 +688,14 @@
             // 
             // btnPO
             // 
+            this.btnPO.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.btnPO.Location = new System.Drawing.Point(483, 3);
             this.btnPO.Name = "btnPO";
             this.btnPO.Size = new System.Drawing.Size(87, 27);
             this.btnPO.TabIndex = 99;
             this.btnPO.TabStop = false;
             this.btnPO.Text = "讀取工單";
-            this.btnPO.UseVisualStyleBackColor = true;
+            this.btnPO.UseVisualStyleBackColor = false;
             this.btnPO.Visible = false;
             this.btnPO.Click += new System.EventHandler(this.btnPO_Click);
             // 
@@ -825,7 +826,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
-            this.Text = "CO11N報工程式 PRD 1.0.5";
+            this.Text = "CO11N 報工程式 ";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -883,16 +884,16 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.DateTimePicker dtpPostgdate;
         private System.Windows.Forms.TextBox txtStart_Time;
-        private System.Windows.Forms.TextBox txtFin_Date;
-        private System.Windows.Forms.TextBox txtFin_Time;
-        private System.Windows.Forms.TextBox txtBreak_Time;
+        private System.Windows.Forms.TextBox txtEnd_Date;
+        private System.Windows.Forms.TextBox txtEnd_Time;
+        private System.Windows.Forms.TextBox txtBreakTime;
         private System.Windows.Forms.TextBox txtBreak_Unit;
         private System.Windows.Forms.TextBox txtConf_Text;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox txtStrat_Date;
+        private System.Windows.Forms.TextBox txtStart_Date;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button buttime;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btnCalcTime;
+        private System.Windows.Forms.TextBox txtPerson;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label lblWorkHourMessage;
         private System.Windows.Forms.Label lblMachineTime;
