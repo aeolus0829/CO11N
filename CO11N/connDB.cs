@@ -137,6 +137,7 @@ namespace connDB
     class mssqlConnClass
     {
         public string sapDB { get; set; }
+        public string sapInitDB { get; private set; }
 
         public string toSAPDB(string DBenv)
         {
@@ -169,6 +170,24 @@ namespace connDB
             sapDBConn = source + catalog + auth;
             return sapDBConn;
         }
+
+        public string detectDBName(string connClient)
+        {
+            switch (connClient)
+            {
+                case "800":
+                    sapInitDB = "prd";
+                    break;
+                case "620":
+                    sapInitDB = "dev";
+                    break;
+                case "300":
+                    sapInitDB = "dev";
+                    break;
+            }
+            return sapInitDB;
+        }
+
 
         public string toPackingDB(string DBenv)
         {

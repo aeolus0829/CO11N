@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CO11N", "CO11N\CO11N.csproj", "{0119C6FC-D549-4F29-813B-F2203741BA59}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4E6A6E78-178D-4837-B5A0-9EB0F29D19F0}"
-	ProjectSection(SolutionItems) = preProject
-		..\POR\POR\connDB.cs = ..\POR\POR\connDB.cs
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

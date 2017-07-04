@@ -4,6 +4,7 @@ using System.Data;
 using System.Windows.Forms;
 using SAP.Middleware.Connector;
 using connDB;
+using System.Data.SqlClient;
 
 namespace CO11N
 {
@@ -24,7 +25,7 @@ namespace CO11N
             //開發資訊
             TESTING = true;
             formName = "CO11N";
-            winFormVersion = "1.07";
+            winFormVersion = "1.08";
             connClient = "620";
 
             //檢查程式是否停用
@@ -95,8 +96,8 @@ namespace CO11N
             var rfcPara = sc.setParaToConn(connClient);
             var rfcDest = RfcDestinationManager.GetDestination(rfcPara);
             var rfcRepo = rfcDest.Repository;
+            var rfcMessageTypeDesc = "";
             IRfcFunction confirmRFC = null;
-
 
             //函數名稱
             confirmRFC = rfcRepo.CreateFunction(confirmCommit);
@@ -160,24 +161,40 @@ namespace CO11N
             //外部確認者
             confirmRFC.SetValue("EX_CREATED_BY", windowsAccount);
 
-            // Call function.
+            //送出報工資料
             confirmRFC.Invoke(rfcDest);
 
-            //回傳參數
+            //回傳報工結果
             var rfcMessageType = confirmRFC.GetValue("STYPE").ToString();
             var rfcStatus = confirmRFC.GetValue("STATUS").ToString();
-            //var rfcReturn = rfcFunc.GetValue("RETURN").ToString();
 
-            var rfcMessageTypeDesc = "";
+            //檢查錯誤的物料異動
+            var dt = checkAFFW(txtAufnr.Text);
+
+            var caRfcMessageType = "";
+            var caRfcStatus = "";
+
+            if (dt.Rows.Count>0)
+            {
+                foreach (DataRow item in dt.Rows)
+                {
+                    //回傳檢查結果
+                    caRfcMessageType = item[0].ToString();
+                    caRfcStatus = item[1].ToString() + item[2].ToString();
+                }
+            }            
+
+            if (!string.IsNullOrEmpty(caRfcMessageType)) rfcMessageType = caRfcMessageType;
+
             switch (rfcMessageType)
             {
                 case "S": rfcMessageTypeDesc = "成功"; break;
                 case "E":
                     rfcMessageTypeDesc = "錯誤";
-                    if (! string.IsNullOrEmpty(rfcStatus))
+                    if (! string.IsNullOrEmpty(caRfcStatus))
                     {
-                        rfcStatus = "物料異動有問題" 
-                            + rfcStatus + Environment.NewLine 
+                        rfcStatus = "物料異動有問題" + Environment.NewLine
+                            + caRfcStatus + Environment.NewLine 
                             + "請通知生管人員！！";
                     }
                     break;
@@ -200,6 +217,43 @@ namespace CO11N
             Cursor.Current = Cursors.Default;
         }
 
+        private DataTable checkAFFW(string text)
+        {
+            mssqlConnClass msc = new mssqlConnClass();
+            var sapInitDB = msc.detectDBName(connClient);
+
+            string sql = "select MSGTY, t.TEXT, MSGV1 from " + sapInitDB + ".AFFW a " +
+                            " left join " + sapInitDB + ".T100 t on a.MSGNO = t.MSGNR and a.MSGID = t.ARBGB" +
+                            " where AUFNR like '%" + text + "%' and t.SPRSL = 'M'";
+            var dt = execQuery(sql);
+
+            return dt;
+        }
+
+        private DataTable execQuery(string sql)
+        {
+            mssqlConnClass msc = new mssqlConnClass();
+            string connString = msc.toSAPDB(connClient);
+            DataTable result = new DataTable();
+            var sqlConn = new SqlConnection(connString);
+            try
+            {
+                sqlConn.Open();
+                SqlCommand sCmd = new SqlCommand(sql, sqlConn);
+                var value = sCmd.ExecuteReader();
+                result.Load(value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "執行 execQuery() 出現問題");
+            }
+            finally
+            {
+                sqlConn.Close();
+            }
+            return result; ;
+
+        }
 
         private void btnClear_Click(object sender, EventArgs e)
         {   
@@ -389,7 +443,6 @@ namespace CO11N
         public string formName { get; private set; }
         public string connClient { get; private set; }
         public bool isFormActive { get; private set; }
-
         private void txtStart_KeyPress(object sender, KeyPressEventArgs e)
         {
             keyIsAccept = detectKey(e);
