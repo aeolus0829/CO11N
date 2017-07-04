@@ -23,10 +23,10 @@ namespace CO11N
             confirmCommit = "ZPPRFC005"; //送出報工結果
 
             //開發資訊
-            TESTING = true;
+            TESTING = false;
             formName = "CO11N";
             winFormVersion = "1.08";
-            connClient = "620";
+            connClient = "800";
 
             //檢查程式是否停用
             chkFormStatusClass chkForm = new chkFormStatusClass();
